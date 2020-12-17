@@ -10,25 +10,18 @@ import SwiftUI
 struct DayView: View {
     var body: some View {
         VStack {
-            Text("1st")
+            Text("Day")
                 .padding()
             
-            Text("2020")
-                .padding()
-            Text("2021")
-                .padding()
-            Text("2022")
-                .padding()
-            Text("2023")
-                .padding()
-            Text("2024")
-                .padding()
+            yearsOfDayView()
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        DayView()
+        Group {
+            DayView()
+        }
     }
 }
