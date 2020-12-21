@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB4FFE7F258BA30100708D39 /* UserPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FFE7E258BA30100708D39 /* UserPage.swift */; };
+		AB4FFE7F258BA30100708D39 /* JournalPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FFE7E258BA30100708D39 /* JournalPage.swift */; };
 		AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB99E394258A5B1A00FE1B1B /* journalApp.swift */; };
 		AB99E397258A5B1A00FE1B1B /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB99E396258A5B1A00FE1B1B /* DayView.swift */; };
 		AB99E399258A5B1F00FE1B1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB99E398258A5B1F00FE1B1B /* Assets.xcassets */; };
 		AB99E39C258A5B1F00FE1B1B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB99E39B258A5B1F00FE1B1B /* Preview Assets.xcassets */; };
-		AB9C43E4258B93BD00345A74 /* yearsOfDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43E3258B93BD00345A74 /* yearsOfDayView.swift */; };
-		AB9C43E7258B949000345A74 /* yearsOfDayTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43E6258B949000345A74 /* yearsOfDayTextView.swift */; };
-		AB9C43EC258B9D0B00345A74 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43EB258B9D0B00345A74 /* User.swift */; };
+		AB9C43E4258B93BD00345A74 /* YearsOfDayTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43E3258B93BD00345A74 /* YearsOfDayTableView.swift */; };
+		AB9C43E7258B949000345A74 /* YearsOfDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43E6258B949000345A74 /* YearsOfDayView.swift */; };
+		AB9C43EC258B9D0B00345A74 /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43EB258B9D0B00345A74 /* Journal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AB4FFE7E258BA30100708D39 /* UserPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserPage.swift; path = journal/ViewModel/UserPage.swift; sourceTree = SOURCE_ROOT; };
+		AB4FFE7E258BA30100708D39 /* JournalPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JournalPage.swift; path = journal/ViewModel/JournalPage.swift; sourceTree = SOURCE_ROOT; };
 		AB99E391258A5B1A00FE1B1B /* journal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = journal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB99E394258A5B1A00FE1B1B /* journalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = journalApp.swift; sourceTree = "<group>"; };
 		AB99E396258A5B1A00FE1B1B /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		AB99E398258A5B1F00FE1B1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB99E39B258A5B1F00FE1B1B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AB99E39D258A5B1F00FE1B1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB9C43E3258B93BD00345A74 /* yearsOfDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yearsOfDayView.swift; sourceTree = "<group>"; };
-		AB9C43E6258B949000345A74 /* yearsOfDayTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yearsOfDayTextView.swift; sourceTree = "<group>"; };
-		AB9C43EB258B9D0B00345A74 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AB9C43E3258B93BD00345A74 /* YearsOfDayTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearsOfDayTableView.swift; sourceTree = "<group>"; };
+		AB9C43E6258B949000345A74 /* YearsOfDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearsOfDayView.swift; sourceTree = "<group>"; };
+		AB9C43EB258B9D0B00345A74 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,7 @@
 		AB4FFE7D258BA27D00708D39 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AB9C43EB258B9D0B00345A74 /* User.swift */,
+				AB9C43EB258B9D0B00345A74 /* Journal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -52,7 +52,7 @@
 		AB4FFE81258BA30F00708D39 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				AB4FFE7E258BA30100708D39 /* UserPage.swift */,
+				AB4FFE7E258BA30100708D39 /* JournalPage.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -99,8 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				AB99E396258A5B1A00FE1B1B /* DayView.swift */,
-				AB9C43E3258B93BD00345A74 /* yearsOfDayView.swift */,
-				AB9C43E6258B949000345A74 /* yearsOfDayTextView.swift */,
+				AB9C43E3258B93BD00345A74 /* YearsOfDayTableView.swift */,
+				AB9C43E6258B949000345A74 /* YearsOfDayView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -176,10 +176,10 @@
 			files = (
 				AB99E397258A5B1A00FE1B1B /* DayView.swift in Sources */,
 				AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */,
-				AB9C43EC258B9D0B00345A74 /* User.swift in Sources */,
-				AB9C43E7258B949000345A74 /* yearsOfDayTextView.swift in Sources */,
-				AB9C43E4258B93BD00345A74 /* yearsOfDayView.swift in Sources */,
-				AB4FFE7F258BA30100708D39 /* UserPage.swift in Sources */,
+				AB9C43EC258B9D0B00345A74 /* Journal.swift in Sources */,
+				AB9C43E7258B949000345A74 /* YearsOfDayView.swift in Sources */,
+				AB9C43E4258B93BD00345A74 /* YearsOfDayTableView.swift in Sources */,
+				AB4FFE7F258BA30100708D39 /* JournalPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct DayView: View {
+    var journalPage = JournalPage()
+    
     var body: some View {
         VStack {
-            Text("Day")
+            Text(journalPage.day)
                 .padding()
             
-            yearsOfDayView()
+            YearsOfDayTableView(years: journalPage.years, texts: journalPage.texts)
         }
     }
 }
