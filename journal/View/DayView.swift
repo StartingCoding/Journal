@@ -12,7 +12,7 @@ struct DayView: View {
     
     var body: some View {
         VStack {
-            Text(journalPage.day)
+            Text("\(journalPage.day)")
                 .padding()
             
             YearsOfDayTableView(years: journalPage.years, texts: journalPage.texts)

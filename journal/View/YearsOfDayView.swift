@@ -12,12 +12,15 @@ struct YearsOfDayView: View {
     var text: String
     
     var body: some View {
-        HStack {
-            Text("\(year)")
-                .padding()
-            
-            Text("\(text)")
-                .padding()
+        GeometryReader { geometry in
+            HStack(spacing: 0) {
+                Text("\(year)")
+                    .frame(width: geometry.size.width * 0.30, height: geometry.size.height, alignment: .top)
+                
+                Text("\(text)")
+                    .background(Color.gray)
+                    .frame(width: geometry.size.width * 0.70, height: geometry.size.height, alignment: .topLeading)
+            }
         }
     }
 }

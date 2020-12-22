@@ -12,8 +12,10 @@ struct YearsOfDayTableView: View {
     var texts: [String]
     
     var body: some View {
-        ForEach(0..<years.count) { index in
-            YearsOfDayView(year: years[index], text: texts[index])
+        VStack {
+            ForEach(0..<years.count) { index in
+                YearsOfDayView(year: years[index], text: texts[index])
+            }
         }
     }
 }
