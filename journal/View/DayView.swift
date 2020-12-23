@@ -17,6 +17,7 @@ struct DayView: View {
             
             YearsOfDayTableView(years: journalPage.years, texts: journalPage.texts)
         }
+        .background(Color("backgroundView"))
     }
 }
 
@@ -24,6 +25,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             DayView()
+                
         }
     }
 }

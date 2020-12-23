@@ -14,9 +14,11 @@ struct YearsOfDayTableView: View {
     var body: some View {
         VStack {
             ForEach(0..<years.count) { index in
-                YearsOfDayView(year: years[index], text: texts[index])
+                YearOfDayView(year: years[index], text: texts[index])
             }
+            .padding(.top)
         }
+        .background(Color("backgroundText"))
     }
 }
 
