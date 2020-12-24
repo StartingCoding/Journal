@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Page: Codable {
+struct Page: Decodable {
     var id: Int
     var name: String
     var day: Int

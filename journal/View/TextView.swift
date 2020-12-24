@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TextView: View {
     var textToDisplay: String
+    @State var showingModal = false
     
     var body: some View {
         VStack {
@@ -16,5 +17,11 @@ struct TextView: View {
                 .truncationMode(.tail)
         }
         .padding(.trailing)
+        .onTapGesture {
+            showingModal.toggle()
+        }
+        .sheet(isPresented: $showingModal, content: {
+            SheetView(showingModal: $showingModal, textToShow: textToDisplay, textBinding: "Insert some text")
+        })
     }
 }
