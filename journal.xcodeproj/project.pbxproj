@@ -11,6 +11,7 @@
 		AB175A2F2594CCC7003436B4 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB175A2E2594CCC7003436B4 /* SheetView.swift */; };
 		AB1881CD25938A2E0002B060 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1881CC25938A2E0002B060 /* TextView.swift */; };
 		AB4FFE7F258BA30100708D39 /* JournalPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FFE7E258BA30100708D39 /* JournalPage.swift */; };
+		AB91BE3225963D460092C552 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91BE3125963D460092C552 /* CustomTextField.swift */; };
 		AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB99E394258A5B1A00FE1B1B /* journalApp.swift */; };
 		AB99E397258A5B1A00FE1B1B /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB99E396258A5B1A00FE1B1B /* DayView.swift */; };
 		AB99E399258A5B1F00FE1B1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB99E398258A5B1F00FE1B1B /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		AB175A2E2594CCC7003436B4 /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
 		AB1881CC25938A2E0002B060 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		AB4FFE7E258BA30100708D39 /* JournalPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JournalPage.swift; path = journal/ViewModel/JournalPage.swift; sourceTree = SOURCE_ROOT; };
+		AB91BE3125963D460092C552 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		AB99E391258A5B1A00FE1B1B /* journal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = journal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB99E394258A5B1A00FE1B1B /* journalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = journalApp.swift; sourceTree = "<group>"; };
 		AB99E396258A5B1A00FE1B1B /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				AB9C43E6258B949000345A74 /* YearOfDayView.swift */,
 				AB1881CC25938A2E0002B060 /* TextView.swift */,
 				AB175A2E2594CCC7003436B4 /* SheetView.swift */,
+				AB91BE3125963D460092C552 /* CustomTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB99E397258A5B1A00FE1B1B /* DayView.swift in Sources */,
+				AB91BE3225963D460092C552 /* CustomTextField.swift in Sources */,
 				AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */,
 				AB9C43EC258B9D0B00345A74 /* Journal.swift in Sources */,
 				AB9C43E7258B949000345A74 /* YearOfDayView.swift in Sources */,
