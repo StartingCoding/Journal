@@ -13,11 +13,23 @@ import SwiftUI
 struct TestTextField: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<TestTextField>) -> UITextField {
         let textField = UITextField()
+        textField.delegate = context.coordinator
         return textField
     }
     
-    func updateUIView(_ uiViewController: UITextField, context: UIViewRepresentableContext<TestTextField>) {
-        
+    func updateUIView(_ uiView: UITextField, context: UIViewRepresentableContext<TestTextField>) {
+//        uiView.becomeFirstResponder()
+//        context.coordinator.textFieldDidBeginEditing?(T##textField: UITextField##UITextField)
+    }
+    
+    func makeCoordinator() -> (TestTextField.Coordinator) {
+        return Coordinator()
+    }
+    
+    class Coordinator: NSObject, UITextFieldDelegate {
+//        func textFieldDidBeginEditing(_ textField: UITextField) {
+//            textField.becomeFirstResponder()
+//        }
     }
 }
 
@@ -47,9 +59,6 @@ struct CustomTextField: UIViewRepresentable {
 
     func makeUIView(context: UIViewRepresentableContext<CustomTextField>) -> UITextField {
         let textField = UITextField(frame: .zero)
-        textField.becomeFirstResponder()
-        
-        print(textField.isFirstResponder)
         textField.delegate = context.coordinator
         return textField
     }

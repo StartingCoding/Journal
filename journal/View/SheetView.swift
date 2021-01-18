@@ -24,9 +24,6 @@ struct SheetView: View {
 //                CustomTextField(text: $textBinding, isFirstResponder: true)
                 TestTextField()
                 
-                Text("Insert New Text")
-                    .cardifyText()
-                
                 Spacer()
             }
             .navigationBarTitle(Text("Insert Text"), displayMode: .inline)

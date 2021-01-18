@@ -11,13 +11,27 @@ struct DayView: View {
     var journalPage = JournalPage()
     
     var body: some View {
-        VStack {
-            Text("\(journalPage.day)")
-                .padding()
-            
-            YearsOfDayTableView(years: journalPage.years, texts: journalPage.texts)
+        NavigationView {
+            VStack {
+                ForEach(0..<journalPage.years.count) { row in
+                    HStack {
+                        Text("\(journalPage.years[row])")
+                            .underline(true, color: .yellow)
+                            .fontWeight(.bold)
+                            .padding(.leading)
+                        Spacer()
+                        DayCard(textToDisplay: journalPage.texts[row])
+                    }
+                }
+            }
+            // Views Modifiers for Navigation
+            .navigationBarTitle(Text(journalPage.today))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading: Button("🗓") {  },
+                trailing: Button("👤") {  }
+            )
         }
-        .background(Color("backgroundView"))
     }
 }
 
@@ -25,7 +39,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             DayView()
-                
         }
     }
 }

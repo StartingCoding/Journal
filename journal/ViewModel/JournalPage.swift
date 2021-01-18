@@ -30,7 +30,7 @@ class JournalPage {
 //        -------------------------------
 //        """
         
-        return Journal(years: years, texts: texts, day: day)
+        return Journal(day: day, years: years, texts: texts)
     }
     
     // MARK: - Access to the Model
@@ -47,9 +47,11 @@ class JournalPage {
     }
     
     var today: String {
-        let today = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd"
+        let today = Date()
+        
+        formatter.locale = Locale.autoupdatingCurrent
+        formatter.setLocalizedDateFormatFromTemplate("MMMMd")
         return formatter.string(from: today)
     }
 }
