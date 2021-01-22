@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB02484425921C67003B2E64 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = AB02484325921C67003B2E64 /* data.json */; };
-		AB175A2F2594CCC7003436B4 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB175A2E2594CCC7003436B4 /* SheetView.swift */; };
-		AB1881CD25938A2E0002B060 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1881CC25938A2E0002B060 /* TextView.swift */; };
+		AB175A2F2594CCC7003436B4 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB175A2E2594CCC7003436B4 /* ChangeView.swift */; };
 		AB4FFE7F258BA30100708D39 /* JournalPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FFE7E258BA30100708D39 /* JournalPage.swift */; };
 		AB91BE3225963D460092C552 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91BE3125963D460092C552 /* CustomTextField.swift */; };
 		AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB99E394258A5B1A00FE1B1B /* journalApp.swift */; };
@@ -24,8 +23,7 @@
 
 /* Begin PBXFileReference section */
 		AB02484325921C67003B2E64 /* data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
-		AB175A2E2594CCC7003436B4 /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
-		AB1881CC25938A2E0002B060 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		AB175A2E2594CCC7003436B4 /* ChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeView.swift; sourceTree = "<group>"; };
 		AB4FFE7E258BA30100708D39 /* JournalPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JournalPage.swift; path = journal/ViewModel/JournalPage.swift; sourceTree = SOURCE_ROOT; };
 		AB91BE3125963D460092C552 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		AB99E391258A5B1A00FE1B1B /* journal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = journal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,8 +111,7 @@
 			children = (
 				AB99E396258A5B1A00FE1B1B /* DayView.swift */,
 				ABAD935C25B09D8700ABC0AA /* DayCard.swift */,
-				AB1881CC25938A2E0002B060 /* TextView.swift */,
-				AB175A2E2594CCC7003436B4 /* SheetView.swift */,
+				AB175A2E2594CCC7003436B4 /* ChangeView.swift */,
 				AB91BE3125963D460092C552 /* CustomTextField.swift */,
 			);
 			path = View;
@@ -196,8 +193,7 @@
 				AB9C43EC258B9D0B00345A74 /* Journal.swift in Sources */,
 				ABAD935D25B09D8700ABC0AA /* DayCard.swift in Sources */,
 				ABB21B0E25921CC1003F6B06 /* Page.swift in Sources */,
-				AB175A2F2594CCC7003436B4 /* SheetView.swift in Sources */,
-				AB1881CD25938A2E0002B060 /* TextView.swift in Sources */,
+				AB175A2F2594CCC7003436B4 /* ChangeView.swift in Sources */,
 				AB4FFE7F258BA30100708D39 /* JournalPage.swift in Sources */,
 				ABB21B1125921F87003F6B06 /* Bundle+Decode.swift in Sources */,
 			);

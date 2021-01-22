@@ -7,19 +7,25 @@
 
 import SwiftUI
 
-
 struct DayCard: View {
-    var textToDisplay: String
+    @State var textToDisplay: String
+    @State private var isShowing = false
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20.0)
-                .fill(Color("greyBg"))
+                .fill(Color("grayBg"))
                 .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.25), radius: 8, x: 0.0, y: 4.0)
             
             DayText(textToDisplay: textToDisplay)
         }
         .padding()
+        .onTapGesture {
+            isShowing.toggle()
+        }
+        .sheet(isPresented: $isShowing) {
+            ChangeView(showingModal: $isShowing, textToShow: $textToDisplay)
+        }
     }
 }
 

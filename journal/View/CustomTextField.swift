@@ -1,40 +1,49 @@
 //
-//  CustomTextField.swift
+//  CustomTextView.swift
 //  journal
 //
 //  Created by Loris on 12/25/20.
 //
 
-// Following: https://www.youtube.com/watch?v=0N-bUVqou8E
-// and: https://www.youtube.com/watch?v=Ek_r-7aRp3A
+// https://www.youtube.com/watch?v=Ek_r-7aRp3A
+// https://stackoverflow.com/questions/56507839/swiftui-how-to-make-textfield-become-first-responder
 
 import SwiftUI
+import UIKit
 
-struct TestTextField: UIViewRepresentable {
-    func makeUIView(context: UIViewRepresentableContext<TestTextField>) -> UITextField {
-        let textField = UITextField()
-        textField.delegate = context.coordinator
-        return textField
+struct CustomTextView: UIViewRepresentable {
+    @Binding var text: String
+    
+    func makeUIView(context: UIViewRepresentableContext<CustomTextView>) -> UITextView {
+        let textView = UITextView()
+        textView.font = .systemFont(ofSize: 22)
+        textView.delegate = context.coordinator
+        textView.becomeFirstResponder()
+        return textView
     }
     
-    func updateUIView(_ uiView: UITextField, context: UIViewRepresentableContext<TestTextField>) {
-//        uiView.becomeFirstResponder()
-//        context.coordinator.textFieldDidBeginEditing?(T##textField: UITextField##UITextField)
+    func updateUIView(_ uiView: UITextView, context: UIViewRepresentableContext<CustomTextView>) {
+        uiView.text = text
     }
     
-    func makeCoordinator() -> (TestTextField.Coordinator) {
-        return Coordinator()
+    func makeCoordinator() -> (CustomTextView.Coordinator) {
+        return Coordinator(text: $text)
     }
     
-    class Coordinator: NSObject, UITextFieldDelegate {
-//        func textFieldDidBeginEditing(_ textField: UITextField) {
-//            textField.becomeFirstResponder()
-//        }
+    class Coordinator: NSObject, UITextViewDelegate {
+        @Binding var text: String
+        
+        init(text: Binding<String>) {
+            _text = text
+        }
+        
+        func textViewDidChange(_ textView: UITextView) {
+            text = textView.text
+        }
     }
 }
 
 
-// Custom TextFIeld taken from https://stackoverflow.com/questions/56507839/swiftui-how-to-make-textfield-become-first-responder
 // also see this https://stackoverflow.com/questions/59990634/swiftui-custom-textfield-with-uiviewrepresentable-issue-with-observableobject-an
 // TODO: - Integrate a UITextField from UIKit into SwiftUI
 struct CustomTextField: UIViewRepresentable {

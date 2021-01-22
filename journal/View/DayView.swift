@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DayView: View {
-    var journalPage = JournalPage()
+    @ObservedObject var journalPage = JournalPage()
     
     var body: some View {
         NavigationView {
