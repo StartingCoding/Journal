@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DayView: View {
-    @ObservedObject var journalPage = JournalPage()
+    @ObservedObject var journalPage: JournalPage
     
     var body: some View {
         NavigationView {
@@ -38,7 +38,7 @@ struct DayView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            DayView()
+            DayView(journalPage: JournalPage())
         }
     }
 }

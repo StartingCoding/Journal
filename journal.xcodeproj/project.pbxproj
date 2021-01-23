@@ -17,7 +17,6 @@
 		AB99E39C258A5B1F00FE1B1B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB99E39B258A5B1F00FE1B1B /* Preview Assets.xcassets */; };
 		AB9C43EC258B9D0B00345A74 /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43EB258B9D0B00345A74 /* Journal.swift */; };
 		ABAD935D25B09D8700ABC0AA /* DayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAD935C25B09D8700ABC0AA /* DayCard.swift */; };
-		ABB21B0E25921CC1003F6B06 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB21B0D25921CC1003F6B06 /* Page.swift */; };
 		ABB21B1125921F87003F6B06 /* Bundle+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB21B1025921F87003F6B06 /* Bundle+Decode.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +33,6 @@
 		AB99E39D258A5B1F00FE1B1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB9C43EB258B9D0B00345A74 /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		ABAD935C25B09D8700ABC0AA /* DayCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCard.swift; sourceTree = "<group>"; };
-		ABB21B0D25921CC1003F6B06 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		ABB21B1025921F87003F6B06 /* Bundle+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Decode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				AB9C43EB258B9D0B00345A74 /* Journal.swift */,
-				ABB21B0D25921CC1003F6B06 /* Page.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -192,7 +189,6 @@
 				AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */,
 				AB9C43EC258B9D0B00345A74 /* Journal.swift in Sources */,
 				ABAD935D25B09D8700ABC0AA /* DayCard.swift in Sources */,
-				ABB21B0E25921CC1003F6B06 /* Page.swift in Sources */,
 				AB175A2F2594CCC7003436B4 /* ChangeView.swift in Sources */,
 				AB4FFE7F258BA30100708D39 /* JournalPage.swift in Sources */,
 				ABB21B1125921F87003F6B06 /* Bundle+Decode.swift in Sources */,

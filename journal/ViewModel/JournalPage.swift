@@ -9,10 +9,14 @@ import Foundation
 
 class JournalPage: ObservableObject {
     // MARK: - Model
-    @Published private var journal = makeUserPlaceholder()
+    @Published private var journal: Journal
+    
+    init() {
+        journal = JournalPage.makeUserPlaceholder()
+    }
     
     static func makeUserPlaceholder() -> Journal {
-        let pageLoaded = Bundle.main.decode([Page].self, from: "data.json")
+        let pageLoaded = Bundle.main.decode([Journal.Page].self, from: "data.json")
         
         var years = [Int]()
         var texts = [String]()
