@@ -5,49 +5,35 @@
 //  Created by Loris on 12/17/20.
 //
 
+// https://matteomanferdini.com/codable/
+
 import Foundation
 
 class JournalPage: ObservableObject {
     // MARK: - Model
-    @Published private var journal: Journal
+    @Published private var page: Page
     
     init() {
-        journal = JournalPage.makeUserPlaceholder()
+        page = JournalPage.makeUserPlaceholder()
     }
     
-    static func makeUserPlaceholder() -> Journal {
-        let pageLoaded = Bundle.main.decode([Journal.Page].self, from: "data.json")
+    static func makeUserPlaceholder() -> Page {
+        let pageLoaded = Bundle.main.decode([Page].self, from: "pages.json")
         
-        var years = [Int]()
-        var texts = [String]()
-        
-        for index in 0..<pageLoaded.count {
-            years.append(pageLoaded[index].year)
-            texts.append(pageLoaded[index].body)
-        }
-        
-        let day = pageLoaded.first!.day
-        
-//        let textPlaceholder = """
-//        -------------------------------
-//        -------------------------------
-//        -------------------------------
-//        """
-        
-        return Journal(day: day, years: years, texts: texts)
+        return pageLoaded.first!
     }
     
     // MARK: - Access to the Model
     var years: [Int] {
-        journal.years
+        page.allYears
     }
     
     var texts: [String] {
-        journal.texts
+        page.allTexts!
     }
     
     var day: Int {
-        journal.day
+        page.day
     }
     
     var today: String {
