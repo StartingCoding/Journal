@@ -8,8 +8,9 @@
 import Foundation
 
 struct Page: Decodable {
-    var day: Int
+    var day: String
+    var month: String
     var allYears: [Int]
-    var allTexts: [String]?
-    var pageContent: [String: String]?
+    var allTexts: [String]
+    var pageContent: [String: String]
 }

@@ -20,12 +20,12 @@ struct DayView: View {
                             .fontWeight(.bold)
                             .padding(.leading)
                         Spacer()
-                        DayCard(textToDisplay: journalPage.texts[row])
+                        DayCard(textToDisplay: journalPage.texts[row], day: journalPage.pageDate)
                     }
                 }
             }
             // Views Modifiers for Navigation
-            .navigationBarTitle(Text(journalPage.today))
+            .navigationBarTitle(Text(journalPage.pageDate))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button("🗓") {  },

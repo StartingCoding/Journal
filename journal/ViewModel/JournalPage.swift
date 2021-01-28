@@ -14,13 +14,54 @@ class JournalPage: ObservableObject {
     @Published private var page: Page
     
     init() {
-        page = JournalPage.makeUserPlaceholder()
+        page = JournalPage.makeTodayPage()
     }
     
-    static func makeUserPlaceholder() -> Page {
-        let pageLoaded = Bundle.main.decode([Page].self, from: "pages.json")
+    static func makeTodayPage() -> Page {
+        let pagesLoaded = Bundle.main.decode([Page].self, from: "pages.json")
         
-        return pageLoaded.first!
+        var today: String
+        let formatter = DateFormatter()
+        let todayDate = Date()
+        formatter.locale = Locale.autoupdatingCurrent
+        formatter.setLocalizedDateFormatFromTemplate("MMMMd")
+        today = formatter.string(from: todayDate)
+        
+        var todayPage = JournalPage.makeBlankPage()
+        
+        for page in pagesLoaded {
+            if today.contains(page.day) && today.contains(page.month) {
+                todayPage = page
+            }
+        }
+        
+        return todayPage
+    }
+    
+    static func makeBlankPage() -> Page {
+        let formatter = DateFormatter()
+        let todayDate = Date()
+        formatter.locale = Locale.autoupdatingCurrent
+        
+        formatter.setLocalizedDateFormatFromTemplate("dd")
+        let todayDay = formatter.string(from: todayDate)
+        
+        formatter.setLocalizedDateFormatFromTemplate("MMMM")
+        let todayMonth = formatter.string(from: todayDate)
+        
+        formatter.setLocalizedDateFormatFromTemplate("yyyy")
+        let todayYear = formatter.string(from: todayDate)
+        var years = [Int]()
+        var texts = [String]()
+        let placeholder = "---------------------------------------------------------------------------------------------"
+        for iterator in 0..<5 {
+            years.append(Int(todayYear)! + iterator)
+            texts.append(placeholder)
+        }
+        
+        let blankPage = Page(day: todayDay, month: todayMonth, allYears: years, allTexts: texts, pageContent: [String : String]())
+        
+        return blankPage
     }
     
     // MARK: - Access to the Model
@@ -29,19 +70,18 @@ class JournalPage: ObservableObject {
     }
     
     var texts: [String] {
-        page.allTexts!
+        page.allTexts
     }
     
-    var day: Int {
+    var month: String {
+        page.month
+    }
+    
+    var day: String {
         page.day
     }
     
-    var today: String {
-        let formatter = DateFormatter()
-        let today = Date()
-        
-        formatter.locale = Locale.autoupdatingCurrent
-        formatter.setLocalizedDateFormatFromTemplate("MMMMd")
-        return formatter.string(from: today)
+    var pageDate: String {
+        month + " " + day
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct DayCard: View {
     @State var textToDisplay: String
     @State private var isShowing = false
+    var day: String
     
     var body: some View {
         ZStack {
@@ -24,7 +25,7 @@ struct DayCard: View {
             isShowing.toggle()
         }
         .sheet(isPresented: $isShowing) {
-            ChangeView(showingModal: $isShowing, textToShow: $textToDisplay)
+            ChangeView(showingModal: $isShowing, textToShow: $textToDisplay, day: day)
         }
     }
 }
@@ -55,7 +56,9 @@ struct DayText: View {
 
 struct DayCard_Previews: PreviewProvider {
     static var previews: some View {
-        DayCard(textToDisplay: JournalPage().texts[1])
+        let journal = JournalPage()
+        
+        DayCard(textToDisplay: journal.texts[1], day: journal.day)
     }
 }
 
