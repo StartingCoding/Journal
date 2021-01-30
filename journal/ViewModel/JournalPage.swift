@@ -18,27 +18,43 @@ class JournalPage: ObservableObject {
     }
     
     static func makeTodayPage() -> Page {
-        let pagesLoaded = Bundle.main.decode([Page].self, from: "pages.json")
+        // Loading pages from FileSystem
+        let pagesLoaded = JournalPage.loadPages(decoding: [Page].self, from: "pages.json")
         
-        var today: String
         let formatter = DateFormatter()
         let todayDate = Date()
         formatter.locale = Locale.autoupdatingCurrent
         formatter.setLocalizedDateFormatFromTemplate("MMMMd")
-        today = formatter.string(from: todayDate)
+        let today = formatter.string(from: todayDate)
         
-        var todayPage = JournalPage.makeBlankPage()
+        var todayPage = JournalPage.makeBlankTodayPage()
         
         for page in pagesLoaded {
             if today.contains(page.day) && today.contains(page.month) {
                 todayPage = page
+                return todayPage
             }
         }
+        writeToDocumentFolder(todayPage)
         
         return todayPage
     }
     
-    static func makeBlankPage() -> Page {
+    static func loadPages<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
+        let fm = FileManager.default
+        let paths = fm.urls(for: .documentDirectory, in: .userDomainMask)
+        let filenamePath = paths[0].appendingPathComponent(filename)
+
+        // If file doesn't exists create it with one blank page from today
+        if fm.fileExists(atPath: filenamePath.path) == false {
+            let blankTodayPage = JournalPage.makeBlankTodayPage()
+            JournalPage.writeToDocumentFolder(blankTodayPage)
+        }
+        
+        return fm.decode(T.self, from: "pages.json")
+    }
+    
+    static func makeBlankTodayPage() -> Page {
         let formatter = DateFormatter()
         let todayDate = Date()
         formatter.locale = Locale.autoupdatingCurrent
@@ -63,6 +79,32 @@ class JournalPage: ObservableObject {
         
         return blankPage
     }
+    
+    static func writeToDocumentFolder(_ page: Page) {
+        // Preparing JSON
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        var data = Data()
+        do {
+            data = try encoder.encode([page])
+        } catch {
+            fatalError("There was an error: -> \(error)")
+        }
+        
+        // Writing using FileManager
+        let fm = FileManager.default
+        let paths = fm.urls(for: .documentDirectory, in: .userDomainMask)
+        let filename = paths[0].appendingPathComponent("pages.json")
+        
+        do {
+            try data.write(to: filename, options: .atomic)
+            print("✅ Writing was a success!")
+        } catch {
+            fatalError("🔴 There was an error writing a file: -> \(error)")
+        }
+    }
+    
     
     // MARK: - Access to the Model
     var years: [Int] {

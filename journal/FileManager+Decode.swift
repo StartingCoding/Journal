@@ -1,0 +1,35 @@
+//
+//  FileManager+Decode.swift
+//  journal
+//
+//  Created by Loris on 30/01/21.
+//
+// Built on top of https://www.hackingwithswift.com/example-code/system/how-to-decode-json-from-your-app-bundle-the-easy-way
+
+import Foundation
+
+extension FileManager {
+    func decode<T: Decodable>(_ type: T.Type, from file: String) -> T {
+        let paths = self.urls(for: .documentDirectory, in: .userDomainMask)
+        let filePath = paths[0].appendingPathComponent(file)
+        
+        guard let data = try? Data(contentsOf: filePath) else {
+            fatalError("Couldn't load data from url took from FileManager")
+        }
+        
+        let decoder = JSONDecoder()
+        do {
+            return try decoder.decode(T.self, from: data)
+        } catch DecodingError.keyNotFound(let key, let context) {
+            fatalError("🔴 Failed to decode \(file) from FileManager due to missing key '\(key.stringValue)' not found - \(context.debugDescription)")
+        } catch DecodingError.typeMismatch(let type, let context) {
+            fatalError("🔴 Failed to decode \(file) from FileManager due to type mismatch on \(type) - \(context.debugDescription)")
+        } catch DecodingError.valueNotFound(let type, let context){
+            fatalError("🔴 Failed to decode \(file) from FileManager due to missing \(type) value - \(context.debugDescription)")
+        } catch DecodingError.dataCorrupted(_) {
+            fatalError("🔴 Failed to decode \(file) from FileManager because it apperas to be invalid JSON")
+        } catch {
+            fatalError("🔴 Failed to decode from FileManager: \(error.localizedDescription)")
+        }
+    }
+}

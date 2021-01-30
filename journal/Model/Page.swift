@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Page: Decodable {
+struct Page: Codable {
     var day: String
     var month: String
     var allYears: [Int]
