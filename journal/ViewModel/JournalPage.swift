@@ -41,17 +41,15 @@ class JournalPage: ObservableObject {
     }
     
     static func loadPages<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
-        let fm = FileManager.default
-        let paths = fm.urls(for: .documentDirectory, in: .userDomainMask)
-        let filenamePath = paths[0].appendingPathComponent(filename)
+        let filenamePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(filename)
 
         // If file doesn't exists create it with one blank page from today
-        if fm.fileExists(atPath: filenamePath.path) == false {
+        if FileManager.default.fileExists(atPath: filenamePath.path) == false {
             let blankTodayPage = JournalPage.makeBlankTodayPage()
             JournalPage.writeToDocumentFolder(blankTodayPage)
         }
         
-        return fm.decode(T.self, from: "pages.json")
+        return FileManager.default.decode(T.self, from: "pages.json")
     }
     
     static func makeBlankTodayPage() -> Page {
@@ -81,21 +79,10 @@ class JournalPage: ObservableObject {
     }
     
     static func writeToDocumentFolder(_ page: Page) {
+        let filename = FileManager.default.getDocumentsDirectory().appendingPathComponent("pages.json")
+        
         // Preparing JSON
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        var data = Data()
-        do {
-            data = try encoder.encode([page])
-        } catch {
-            fatalError("There was an error: -> \(error)")
-        }
-        
-        // Writing using FileManager
-        let fm = FileManager.default
-        let paths = fm.urls(for: .documentDirectory, in: .userDomainMask)
-        let filename = paths[0].appendingPathComponent("pages.json")
+        let data = FileManager.default.encode([page])
         
         do {
             try data.write(to: filename, options: .atomic)

@@ -10,7 +10,7 @@ import Foundation
 
 extension FileManager {
     func decode<T: Decodable>(_ type: T.Type, from file: String) -> T {
-        let paths = self.urls(for: .documentDirectory, in: .userDomainMask)
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let filePath = paths[0].appendingPathComponent(file)
         
         guard let data = try? Data(contentsOf: filePath) else {
@@ -31,5 +31,23 @@ extension FileManager {
         } catch {
             fatalError("🔴 Failed to decode from FileManager: \(error.localizedDescription)")
         }
+    }
+    
+    func encode<T: Encodable>(_ type: T) -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        do {
+            return try encoder.encode(type)
+        } catch EncodingError.invalidValue(let value, let context) {
+            fatalError("🔴 Failed to encode the given value \(value) - \(context.debugDescription)")
+        } catch {
+            fatalError("🔴 Failed to encode from FileManager: \(error.localizedDescription)")
+        }
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 }
