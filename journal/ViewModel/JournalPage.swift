@@ -35,7 +35,7 @@ class JournalPage: ObservableObject {
                 return todayPage
             }
         }
-        writeToDocumentFolder(todayPage)
+        FileManager.default.writeJSONToDocumentsFolder([todayPage], to: "pages.json")
         
         return todayPage
     }
@@ -46,7 +46,7 @@ class JournalPage: ObservableObject {
         // If file doesn't exists create it with one blank page from today
         if FileManager.default.fileExists(atPath: filenamePath.path) == false {
             let blankTodayPage = JournalPage.makeBlankTodayPage()
-            JournalPage.writeToDocumentFolder(blankTodayPage)
+            FileManager.default.writeJSONToDocumentsFolder([blankTodayPage], to: "pages.json")
         }
         
         return FileManager.default.decode(T.self, from: "pages.json")
@@ -76,20 +76,6 @@ class JournalPage: ObservableObject {
         let blankPage = Page(day: todayDay, month: todayMonth, allYears: years, allTexts: texts, pageContent: [String : String]())
         
         return blankPage
-    }
-    
-    static func writeToDocumentFolder(_ page: Page) {
-        let filename = FileManager.default.getDocumentsDirectory().appendingPathComponent("pages.json")
-        
-        // Preparing JSON
-        let data = FileManager.default.encode([page])
-        
-        do {
-            try data.write(to: filename, options: .atomic)
-            print("✅ Writing was a success!")
-        } catch {
-            fatalError("🔴 There was an error writing a file: -> \(error)")
-        }
     }
     
     

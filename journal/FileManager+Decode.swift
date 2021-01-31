@@ -50,4 +50,15 @@ extension FileManager {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
+    
+    func writeJSONToDocumentsFolder(_ page: [Page], to file: String) {
+        let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
+        let data = FileManager.default.encode(page)
+        
+        do {
+            try data.write(to: filePath, options: .atomic)
+        } catch {
+            fatalError("🔴 Failed to write data in Documents folder: \(error.localizedDescription)")
+        }
+    }
 }
