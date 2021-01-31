@@ -65,6 +65,7 @@ class JournalPage: ObservableObject {
         
         formatter.setLocalizedDateFormatFromTemplate("yyyy")
         let todayYear = formatter.string(from: todayDate)
+        
         var years = [Int]()
         var texts = [String]()
         let placeholder = "---------------------------------------------------------------------------------------------"

@@ -55,10 +55,17 @@ extension FileManager {
         let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
         let data = FileManager.default.encode(page)
         
-        do {
-            try data.write(to: filePath, options: .atomic)
-        } catch {
-            fatalError("🔴 Failed to write data in Documents folder: \(error.localizedDescription)")
+        if FileManager.default.fileExists(atPath: filePath.path) == false {
+            FileManager.default.createFile(atPath: filePath.path, contents: nil)
+        }
+        
+        let file: FileHandle? = FileHandle(forUpdatingAtPath: filePath.path)
+        if file == nil {
+            fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
+        } else {
+//            file?.seek(toFileOffset: 0)
+            file?.write(data)
+            file?.closeFile()
         }
     }
 }
