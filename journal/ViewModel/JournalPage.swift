@@ -35,7 +35,7 @@ class JournalPage: ObservableObject {
                 return todayPage
             }
         }
-        FileManager.default.writeJSONToDocumentsFolder([todayPage], to: "pages.json")
+        FileManager.default.writeJSONToDocumentsFolder(todayPage, to: "pages.json")
         
         return todayPage
     }
@@ -46,7 +46,7 @@ class JournalPage: ObservableObject {
         // If file doesn't exists create it with one blank page from today
         if FileManager.default.fileExists(atPath: filenamePath.path) == false {
             let blankTodayPage = JournalPage.makeBlankTodayPage()
-            FileManager.default.writeJSONToDocumentsFolder([blankTodayPage], to: "pages.json")
+            FileManager.default.writeJSONToDocumentsFolder(blankTodayPage, to: "pages.json")
         }
         
         return FileManager.default.decode(T.self, from: "pages.json")

@@ -4,7 +4,8 @@
 //
 //  Created by Loris on 30/01/21.
 //
-// Built on top of https://www.hackingwithswift.com/example-code/system/how-to-decode-json-from-your-app-bundle-the-easy-way
+// Decoding/Encoding built on top of https://www.hackingwithswift.com/example-code/system/how-to-decode-json-from-your-app-bundle-the-easy-way
+// Writing file with FileHandle with: https://www.techotopia.com/index.php/Working_with_Files_in_Swift_on_iOS_8#Reading_and_Writing_Files_with_FileManager
 
 import Foundation
 
@@ -50,12 +51,9 @@ extension FileManager {
         return paths[0]
     }
     
-    func writeJSONToDocumentsFolder(_ page: [Page], to file: String) {
-        // https://www.techotopia.com/index.php/Working_with_Files_in_Swift_on_iOS_8#Reading_and_Writing_Files_with_FileManager
+    func writeJSONToDocumentsFolder(_ page: Page, to file: String) {
         let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
-        let data = FileManager.default.encode(page)
         var isEmptyFileCreated: Bool
-        print(filePath.path)
         
         if FileManager.default.fileExists(atPath: filePath.path) == false {
             FileManager.default.createFile(atPath: filePath.path, contents: nil)
@@ -64,33 +62,34 @@ extension FileManager {
             isEmptyFileCreated = false
         }
         
+        let data = FileManager.default.encode([page])
         let file: FileHandle? = FileHandle(forUpdatingAtPath: filePath.path)
+        
         if file == nil {
             fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
         } else {
+            // if the file exists and is empty fill it with a blank page
+            // if there is some data in the file:
+            // - take it and decode it to a swift object
+            // - update the object with a new page
+            // - encode the swift object back to a Data object and write it to file
             if isEmptyFileCreated {
                 file?.write(data)
                 file?.closeFile()
             } else {
-                // take the data that exists
-                // decode data to swift object
                 var swiftObject = FileManager.default.decode([Page].self, from: filePath.lastPathComponent)
-                print(swiftObject)
+                
                 // Check if the data is up to date
                 for item in swiftObject {
-                    if item.day == page.first!.day {
+                    if item.day == page.day {
                         file?.closeFile()
                         return
                     }
                 }
-                // update swift object
-                swiftObject.append(page.first!)
-                print(swiftObject)
-                // encode swift object to data updated
+                
+                swiftObject.append(page)
                 let newData = FileManager.default.encode(swiftObject)
-                // write new data
                 file?.write(newData)
-                // close file
                 file?.closeFile()
             }
         }
