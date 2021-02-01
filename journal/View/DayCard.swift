@@ -56,9 +56,9 @@ struct DayText: View {
 
 struct DayCard_Previews: PreviewProvider {
     static var previews: some View {
-        let journal = JournalPage()
+        let todayPage = TodayPage()
         
-        DayCard(textToDisplay: journal.texts[1], day: journal.day)
+        DayCard(textToDisplay: todayPage.texts[1], day: todayPage.day)
     }
 }
 

@@ -39,8 +39,8 @@ struct ChangeView: View {
 
 struct ChangeView_Previews: PreviewProvider {
     static var previews: some View {
-        let journal = JournalPage()
+        let todayPage = TodayPage()
         
-        ChangeView(showingModal: Binding.constant(true), textToShow: Binding.constant(journal.texts[0]), day: journal.day)
+        ChangeView(showingModal: Binding.constant(true), textToShow: Binding.constant(todayPage.texts[0]), day: todayPage.day)
     }
 }

@@ -8,24 +8,24 @@
 import SwiftUI
 
 struct DayView: View {
-    @ObservedObject var journalPage: JournalPage
+    @ObservedObject var todayPage: TodayPage
     
     var body: some View {
         NavigationView {
             VStack {
-                ForEach(0..<journalPage.years.count) { row in
+                ForEach(0..<todayPage.years.count) { row in
                     HStack {
-                        Text("\(journalPage.years[row])")
+                        Text("\(todayPage.years[row])")
                             .underline(true, color: .yellow)
                             .fontWeight(.bold)
                             .padding(.leading)
                         Spacer()
-                        DayCard(textToDisplay: journalPage.texts[row], day: journalPage.pageDate)
+                        DayCard(textToDisplay: todayPage.texts[row], day: todayPage.pageDate)
                     }
                 }
             }
             // Views Modifiers for Navigation
-            .navigationBarTitle(Text(journalPage.pageDate))
+            .navigationBarTitle(Text(todayPage.pageDate))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button("🗓") {  },
@@ -38,7 +38,7 @@ struct DayView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            DayView(journalPage: JournalPage())
+            DayView(todayPage: TodayPage())
         }
     }
 }

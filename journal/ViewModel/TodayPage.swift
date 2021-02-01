@@ -1,5 +1,5 @@
 //
-//  JournalPage.swift
+//  TodayPage.swift
 //  journal
 //
 //  Created by Loris on 12/17/20.
@@ -9,32 +9,34 @@
 
 import Foundation
 
-class JournalPage: ObservableObject {
+class TodayPage: ObservableObject {
     // MARK: - Model
-    @Published private var page: Page
+    @Published private var todayPage: Page
     
     init() {
-        page = JournalPage.makeTodayPage()
+        todayPage = TodayPage.makeTodayPage()
     }
     
     static func makeTodayPage() -> Page {
-        // Loading pages from FileSystem
-        let pagesLoaded = JournalPage.loadPages(decoding: [Page].self, from: "pages.json")
+        // Loading pages from Documents folder by FileManager
+        let pagesLoaded = TodayPage.loadPages(decoding: [Page].self, from: "pages.json")
         
-        let formatter = DateFormatter()
+        // Create a date from now so it can be compared with dates from the pages array
         let todayDate = Date()
+        let formatter = DateFormatter()
         formatter.locale = Locale.autoupdatingCurrent
         formatter.setLocalizedDateFormatFromTemplate("MMMMd")
         let today = formatter.string(from: todayDate)
         
-        var todayPage = JournalPage.makeBlankTodayPage()
-        
+        // Check if the array contains a page from today and return it
         for page in pagesLoaded {
             if today.contains(page.day) && today.contains(page.month) {
-                todayPage = page
-                return todayPage
+                return page
             }
         }
+        
+        // If we didn't found a page from the array create a blank page from today and write it to the file
+        let todayPage = TodayPage.makeBlankTodayPage()
         FileManager.default.writeJSONToDocumentsFolder(todayPage, to: "pages.json")
         
         return todayPage
@@ -43,13 +45,13 @@ class JournalPage: ObservableObject {
     static func loadPages<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
         let filenamePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(filename)
 
-        // If file doesn't exists create it with one blank page from today
+        // If the file doesn't exists, write it a new one with just one blank page taken from today
         if FileManager.default.fileExists(atPath: filenamePath.path) == false {
-            let blankTodayPage = JournalPage.makeBlankTodayPage()
-            FileManager.default.writeJSONToDocumentsFolder(blankTodayPage, to: "pages.json")
+            let blankTodayPage = TodayPage.makeBlankTodayPage()
+            FileManager.default.writeJSONToDocumentsFolder(blankTodayPage, to: filename)
         }
         
-        return FileManager.default.decode(T.self, from: "pages.json")
+        return FileManager.default.decode(T.self, from: filename)
     }
     
     static func makeBlankTodayPage() -> Page {
@@ -75,29 +77,30 @@ class JournalPage: ObservableObject {
         }
         
         let blankPage = Page(day: todayDay, month: todayMonth, allYears: years, allTexts: texts, pageContent: [String : String]())
-        
         return blankPage
     }
     
     
     // MARK: - Access to the Model
     var years: [Int] {
-        page.allYears
+        todayPage.allYears
     }
     
     var texts: [String] {
-        page.allTexts
+        todayPage.allTexts
     }
     
     var month: String {
-        page.month
+        todayPage.month
     }
     
     var day: String {
-        page.day
+        todayPage.day
     }
     
     var pageDate: String {
         month + " " + day
     }
+    
+    // MARK: - Intent
 }

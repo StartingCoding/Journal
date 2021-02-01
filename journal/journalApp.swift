@@ -11,7 +11,7 @@ import SwiftUI
 struct journalApp: App {
     var body: some Scene {
         WindowGroup {
-            DayView(journalPage: JournalPage())
+            DayView(todayPage: TodayPage())
         }
     }
 }
