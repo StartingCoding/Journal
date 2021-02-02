@@ -36,10 +36,10 @@ class TodayPage: ObservableObject {
         }
         
         // If we didn't found a page from the array create a blank page from today and write it to the file
-        let todayPage = TodayPage.makeBlankTodayPage()
-        FileManager.default.writeJSONToDocumentsFolder(todayPage, to: "pages.json")
+        let blankTodayPage = TodayPage.makeBlankTodayPage()
+        FileManager.default.writeBlankTodayPageToDocumentsFolder(blankTodayPage, to: "pages.json")
         
-        return todayPage
+        return blankTodayPage
     }
     
     static func loadPages<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
@@ -48,7 +48,7 @@ class TodayPage: ObservableObject {
         // If the file doesn't exists, write it a new one with just one blank page taken from today
         if FileManager.default.fileExists(atPath: filenamePath.path) == false {
             let blankTodayPage = TodayPage.makeBlankTodayPage()
-            FileManager.default.writeJSONToDocumentsFolder(blankTodayPage, to: filename)
+            FileManager.default.writeBlankTodayPageToDocumentsFolder(blankTodayPage, to: filename)
         }
         
         return FileManager.default.decode(T.self, from: filename)
@@ -103,4 +103,13 @@ class TodayPage: ObservableObject {
     }
     
     // MARK: - Intent
+    
+    func updateTodayPage(newPage: Page) {
+        // Write changes to the file
+        FileManager.default.writeBlankTodayPageToDocumentsFolder(newPage, to: "pages.json")
+        // Reload the pages
+        let updatedPages = FileManager.default.decode([Page].self, from: "pages.json")
+        // Assign the new today page to the Published var so it can update all the views
+        todayPage = updatedPages.first!
+    }
 }

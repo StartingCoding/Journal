@@ -51,7 +51,7 @@ extension FileManager {
         return paths[0]
     }
     
-    func writeJSONToDocumentsFolder(_ page: Page, to file: String) {
+    func writeBlankTodayPageToDocumentsFolder(_ page: Page, to file: String) {
         let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
         var isEmptyFileCreated: Bool
         
@@ -79,9 +79,13 @@ extension FileManager {
             } else {
                 var swiftObject = FileManager.default.decode([Page].self, from: filePath.lastPathComponent)
                 
-                // Check if the data is up to date
+                // If the page is from today don't make another blankTodayPage
                 for item in swiftObject {
                     if item.day == page.day {
+                        if item.allTexts != page.allTexts {
+                            let newData = FileManager.default.encode(swiftObject)
+                            file?.write(newData)
+                        }
                         file?.closeFile()
                         return
                     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ChangeView: View {
     @Binding var showingModal: Bool
     @Binding var textToShow: String
-    var day: String
+    var fullDate: String
     
     var body: some View {
         NavigationView {
@@ -27,7 +27,7 @@ struct ChangeView: View {
                 Spacer()
             }
             .background(Color("grayBg"))
-            .navigationBarTitle(Text(day), displayMode: .inline)
+            .navigationBarTitle(Text(fullDate), displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
                 showingModal = false
             }) {
@@ -41,6 +41,6 @@ struct ChangeView_Previews: PreviewProvider {
     static var previews: some View {
         let todayPage = TodayPage()
         
-        ChangeView(showingModal: Binding.constant(true), textToShow: Binding.constant(todayPage.texts[0]), day: todayPage.day)
+        ChangeView(showingModal: Binding.constant(true), textToShow: Binding.constant(todayPage.texts[0]), fullDate: todayPage.pageDate + ", \(todayPage.years[0])")
     }
 }

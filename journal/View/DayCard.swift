@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct DayCard: View {
-    @State var textToDisplay: String
+    @State var text: String
     @State private var isShowing = false
-    var day: String
+    var fullDate: String
     
     var body: some View {
         ZStack {
@@ -18,36 +18,36 @@ struct DayCard: View {
                 .fill(Color("grayBg"))
                 .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.25), radius: 8, x: 0.0, y: 4.0)
             
-            DayText(textToDisplay: textToDisplay)
+            Content(textToDisplay: text)
         }
         .padding()
         .onTapGesture {
             isShowing.toggle()
         }
         .sheet(isPresented: $isShowing) {
-            ChangeView(showingModal: $isShowing, textToShow: $textToDisplay, day: day)
+            ChangeView(showingModal: $isShowing, textToShow: $text, fullDate: fullDate)
         }
     }
 }
 
 
-struct DayText: View {
+struct Content: View {
     var textToDisplay: String
     
-    var testing: String {
-        var result = ""
+    var tweetLenght: String {
+        var textToLimitChar = ""
         
         for (index, letter) in self.textToDisplay.enumerated() {
             if index <= 140 {
-                result.append(letter)
+                textToLimitChar.append(letter)
             }
         }
         
-        return result
+        return textToLimitChar
     }
     
     var body: some View {
-            Text(testing)
+            Text(tweetLenght)
                 .truncationMode(.tail)
                 .padding()
     }
@@ -58,7 +58,7 @@ struct DayCard_Previews: PreviewProvider {
     static var previews: some View {
         let todayPage = TodayPage()
         
-        DayCard(textToDisplay: todayPage.texts[1], day: todayPage.day)
+        DayCard(text: todayPage.texts[1], fullDate: todayPage.day)
     }
 }
 

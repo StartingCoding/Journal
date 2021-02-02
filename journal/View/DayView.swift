@@ -13,6 +13,8 @@ struct DayView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Divider()
+                
                 ForEach(0..<todayPage.years.count) { row in
                     HStack {
                         Text("\(todayPage.years[row])")
@@ -20,9 +22,11 @@ struct DayView: View {
                             .fontWeight(.bold)
                             .padding(.leading)
                         Spacer()
-                        DayCard(textToDisplay: todayPage.texts[row], day: todayPage.pageDate)
+                        DayCard(text: todayPage.texts[row], fullDate: todayPage.pageDate + ", \(todayPage.years[row])")
                     }
                 }
+                
+                Divider()
             }
             // Views Modifiers for Navigation
             .navigationBarTitle(Text(todayPage.pageDate))
