@@ -52,48 +52,50 @@ extension FileManager {
     }
     
     func writeBlankTodayPageToDocumentsFolder(_ page: Page, to file: String) {
+        // Create an empty file if there is none
+        let isEmptyFileCreated = FileManager.default.createEmptyFile(to: file)
+        
+        // If file is empty aka 0 pages -> write 1 blankTodayPage
+        // if file is not empty aka 1 or more -> if todayBlankPage is not in the file write it
+        FileManager.default.checkAndWriteBlankTodayPage(isEmptyFileCreated, page: page, to: file)
+    }
+    
+    func createEmptyFile(to file: String) -> Bool {
         let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
-        var isEmptyFileCreated: Bool
         
         if FileManager.default.fileExists(atPath: filePath.path) == false {
             FileManager.default.createFile(atPath: filePath.path, contents: nil)
-            isEmptyFileCreated = true
+            return true
         } else {
-            isEmptyFileCreated = false
+            return false
         }
-        
-        let data = FileManager.default.encode([page])
+    }
+    
+    func checkAndWriteBlankTodayPage(_ isEmptyFileCreated: Bool, page: Page, to file: String) {
+        let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
         let file: FileHandle? = FileHandle(forUpdatingAtPath: filePath.path)
         
         if file == nil {
             fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
         } else {
-            // if the file exists and is empty fill it with a blank page
-            // if there is some data in the file:
-            // - take it and decode it to a swift object
-            // - update the object with a new page
-            // - encode the swift object back to a Data object and write it to file
+            let data = FileManager.default.encode([page])
+            
             if isEmptyFileCreated {
+                // If file is empty aka 0 pages -> write 1 blankTodayPage
                 file?.write(data)
                 file?.closeFile()
             } else {
+                // if file is not empty aka 1 or more -> if todayBlankPage is not in the file write it
                 var swiftObject = FileManager.default.decode([Page].self, from: filePath.lastPathComponent)
                 
-                // If the page is from today don't make another blankTodayPage
                 for item in swiftObject {
-                    if item.day == page.day {
-                        if item.allTexts != page.allTexts {
-                            let newData = FileManager.default.encode(swiftObject)
-                            file?.write(newData)
-                        }
+                    if (item.day != page.day) && (item.allTexts != page.allTexts) {
+                        swiftObject.append(page)
+                        let newData = FileManager.default.encode(swiftObject)
+                        file?.write(newData)
                         file?.closeFile()
-                        return
                     }
                 }
-                
-                swiftObject.append(page)
-                let newData = FileManager.default.encode(swiftObject)
-                file?.write(newData)
                 file?.closeFile()
             }
         }

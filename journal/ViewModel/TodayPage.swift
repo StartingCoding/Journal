@@ -104,13 +104,19 @@ class TodayPage: ObservableObject {
     }
     
     // MARK: - Intent
-    
-    func updateTodayPage(newPage: Page) {
-        // Write changes to the file
-        FileManager.default.writeBlankTodayPageToDocumentsFolder(newPage, to: "pages.json")
-        // Reload the pages
-        let updatedPages = FileManager.default.decode([Page].self, from: "pages.json")
-        // Assign the new today page to the Published var so it can update all the views
-        todayPage = updatedPages.first!
+    func writeNewTodayPageToDocumentsFolder(textToUpdate: String, fullDate: String) {
+        // load and decode pages from json
+        var loadedPages = FileManager.default.decode([Page].self, from: "pages.json")
+        // check if todaypage already exists in loadedpages
+        for (index, page) in loadedPages.enumerated() {
+            if fullDate.contains(page.day) && fullDate.contains(page.month) {
+                // remove old page if there is one
+                loadedPages.remove(at: index)
+            }
+        }
+        // insert todaypage in loadedpages
+        loadedPages.append(todayPage)
+        // encode new pages and write it back to json
+        
     }
 }
