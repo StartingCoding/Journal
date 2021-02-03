@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ChangeView: View {
-    @Binding var showingModal: Bool
-    @Binding var textToShow: String
+    @Binding var text: String
     var fullDate: String
+    
+    @Binding var isShowing: Bool
     
     var body: some View {
         NavigationView {
@@ -20,7 +21,7 @@ struct ChangeView: View {
                         .fill(Color("whiteBg"))
                         .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.25), radius: 8, x: 0.0, y: 4.0)
                     
-                    CustomTextView(text: $textToShow)
+                    CustomTextView(text: $text)
                         .padding()
                 }
                 .padding()
@@ -28,11 +29,11 @@ struct ChangeView: View {
             }
             .background(Color("grayBg"))
             .navigationBarTitle(Text(fullDate), displayMode: .inline)
-            .navigationBarItems(trailing: Button(action: {
-                showingModal = false
-            }) {
-                Text("Done").bold()
-            })
+            .navigationBarItems(
+                trailing: Button("Done") {
+                    isShowing = false
+                }
+            )
         }
     }
 }
@@ -41,6 +42,6 @@ struct ChangeView_Previews: PreviewProvider {
     static var previews: some View {
         let todayPage = TodayPage()
         
-        ChangeView(showingModal: Binding.constant(true), textToShow: Binding.constant(todayPage.texts[0]), fullDate: todayPage.pageDate + ", \(todayPage.years[0])")
+        ChangeView(text: Binding.constant(todayPage.texts[0]), fullDate: todayPage.pageDate + ", \(todayPage.years[0])", isShowing: Binding.constant(true))
     }
 }

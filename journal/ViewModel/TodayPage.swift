@@ -87,7 +87,8 @@ class TodayPage: ObservableObject {
     }
     
     var texts: [String] {
-        todayPage.allTexts
+        get { todayPage.allTexts }
+        set { todayPage.allTexts = newValue }
     }
     
     var month: String {

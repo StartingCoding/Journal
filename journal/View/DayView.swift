@@ -22,7 +22,7 @@ struct DayView: View {
                             .fontWeight(.bold)
                             .padding(.leading)
                         Spacer()
-                        DayCard(text: todayPage.texts[row], fullDate: todayPage.pageDate + ", \(todayPage.years[row])")
+                        DayCard(text: $todayPage.texts[row], fullDate: todayPage.pageDate + ", \(todayPage.years[row])")
                     }
                 }
                 
