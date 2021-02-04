@@ -56,7 +56,6 @@ extension FileManager {
         let isEmptyFileCreated = FileManager.default.createEmptyFile(to: file)
         
         // If file is empty aka 0 pages -> write 1 blankTodayPage
-        // if file is not empty aka 1 or more -> if todayBlankPage is not in the file write it
         FileManager.default.checkAndWriteBlankTodayPage(isEmptyFileCreated, page: page, to: file)
     }
     
@@ -78,26 +77,30 @@ extension FileManager {
         if file == nil {
             fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
         } else {
-            let data = FileManager.default.encode([page])
+            let data = FileManager.default.encode(page)
             
             if isEmptyFileCreated {
                 // If file is empty aka 0 pages -> write 1 blankTodayPage
                 file?.write(data)
                 file?.closeFile()
             } else {
-                // if file is not empty aka 1 or more -> if todayBlankPage is not in the file write it
-                var swiftObject = FileManager.default.decode([Page].self, from: filePath.lastPathComponent)
-                
-                for item in swiftObject {
-                    if (item.day != page.day) && (item.allTexts != page.allTexts) {
-                        swiftObject.append(page)
-                        let newData = FileManager.default.encode(swiftObject)
-                        file?.write(newData)
-                        file?.closeFile()
-                    }
-                }
                 file?.closeFile()
             }
         }
     }
+    
+    // TODO: make single JSON pages for days instead of one long pages.json
+//    func writePagesToDocumentsFolder(pages: [Page], to file: String) {
+//        let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
+//        let file: FileHandle? = FileHandle(forUpdatingAtPath: filePath.path)
+//
+//        if file == nil {
+//            fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
+//        } else {
+//            // Enocde new pages
+//            let data = FileManager.default.encode(pages)
+//            file?.write(data)
+//            file?.closeFile()
+//        }
+//    }
 }

@@ -23,6 +23,7 @@ struct DayView: View {
                             .padding(.leading)
                         Spacer()
                         DayCard(text: $todayPage.texts[row], fullDate: todayPage.pageDate + ", \(todayPage.years[row])")
+                            .environmentObject(todayPage)
                     }
                 }
                 

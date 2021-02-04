@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ChangeView: View {
+    @EnvironmentObject var todayPage: TodayPage
+    
     @Binding var text: String
     var fullDate: String
     
@@ -32,6 +34,7 @@ struct ChangeView: View {
             .navigationBarItems(
                 trailing: Button("Done") {
                     isShowing = false
+//                    todayPage.writeNewTodayPageToDocumentsFolder(textToUpdate: text, fullDate: fullDate)
                 }
             )
         }

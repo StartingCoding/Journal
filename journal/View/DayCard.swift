@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DayCard: View {
+    @EnvironmentObject var todayPage: TodayPage
     @Binding var text: String
     var fullDate: String
     
@@ -27,6 +28,7 @@ struct DayCard: View {
         }
         .sheet(isPresented: $isShowing) {
             ChangeView(text: $text, fullDate: fullDate, isShowing: $isShowing)
+                .environmentObject(todayPage)
         }
     }
 }

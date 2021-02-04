@@ -18,28 +18,17 @@ class TodayPage: ObservableObject {
     }
     
     static func makeTodayPage() -> Page {
-        // Loading pages from Documents folder by FileManager
-        let pagesLoaded = TodayPage.loadPages(decoding: [Page].self, from: "pages.json")
-        
-        // Create a date from now so it can be compared with dates from the pages array
+        // Create a date from now so it can be compared
         let todayDate = Date()
         let formatter = DateFormatter()
         formatter.locale = Locale.autoupdatingCurrent
-        formatter.setLocalizedDateFormatFromTemplate("MMMMd")
-        let today = formatter.string(from: todayDate)
         
-        // Check if the array contains a page from today and return it
-        for page in pagesLoaded {
-            if today.contains(page.day) && today.contains(page.month) {
-                return page
-            }
-        }
+        formatter.dateFormat = "dd-MM-yyyy"
+        let filename = formatter.string(from: todayDate) + ".json"
+        // Loading pages from Documents folder by FileManager
+        let pageLoaded = TodayPage.loadPages(decoding: Page.self, from: filename)
         
-        // If we didn't found a page from the array create a blank page from today and write it to the file
-        let blankTodayPage = TodayPage.makeBlankTodayPage()
-        FileManager.default.writeBlankTodayPageToDocumentsFolder(blankTodayPage, to: "pages.json")
-        
-        return blankTodayPage
+        return pageLoaded
     }
     
     static func loadPages<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
@@ -104,19 +93,22 @@ class TodayPage: ObservableObject {
     }
     
     // MARK: - Intent
-    func writeNewTodayPageToDocumentsFolder(textToUpdate: String, fullDate: String) {
-        // load and decode pages from json
-        var loadedPages = FileManager.default.decode([Page].self, from: "pages.json")
-        // check if todaypage already exists in loadedpages
-        for (index, page) in loadedPages.enumerated() {
-            if fullDate.contains(page.day) && fullDate.contains(page.month) {
-                // remove old page if there is one
-                loadedPages.remove(at: index)
-            }
-        }
-        // insert todaypage in loadedpages
-        loadedPages.append(todayPage)
-        // encode new pages and write it back to json
-        
-    }
+//    func writeNewTodayPageToDocumentsFolder(textToUpdate: String, fullDate: String) {
+//        // load and decode pages from json
+//        var loadedPages = FileManager.default.decode([Page].self, from: "pages.json")
+//        print(loadedPages)
+//        // check if todaypage already exists in loadedpages
+//        for (index, page) in loadedPages.enumerated() {
+//            if fullDate.contains(page.day) && fullDate.contains(page.month) {
+//                // remove old page if there is one
+//                loadedPages.remove(at: index)
+//                print(loadedPages)
+//            }
+//        }
+//        // insert todaypage in loadedpages
+//        loadedPages.append(todayPage)
+//        print(loadedPages)
+//        // encode new pages and write it back to json
+//        FileManager.default.writePagesToDocumentsFolder(pages: loadedPages, to: "pages.json")
+//    }
 }
