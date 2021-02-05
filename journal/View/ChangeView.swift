@@ -34,7 +34,7 @@ struct ChangeView: View {
             .navigationBarItems(
                 trailing: Button("Done") {
                     isShowing = false
-//                    todayPage.writeNewTodayPageToDocumentsFolder(textToUpdate: text, fullDate: fullDate)
+                    todayPage.savePageToDocumentsFolder()
                 }
             )
         }

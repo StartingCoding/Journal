@@ -26,12 +26,12 @@ class TodayPage: ObservableObject {
         formatter.dateFormat = "dd-MM-yyyy"
         let filename = formatter.string(from: todayDate) + ".json"
         // Loading pages from Documents folder by FileManager
-        let pageLoaded = TodayPage.loadPages(decoding: Page.self, from: filename)
+        let pageLoaded = TodayPage.loadTodayPage(decoding: Page.self, from: filename)
         
         return pageLoaded
     }
     
-    static func loadPages<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
+    static func loadTodayPage<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
         let filenamePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(filename)
 
         // If the file doesn't exists, write it a new one with just one blank page taken from today
@@ -93,22 +93,24 @@ class TodayPage: ObservableObject {
     }
     
     // MARK: - Intent
-//    func writeNewTodayPageToDocumentsFolder(textToUpdate: String, fullDate: String) {
-//        // load and decode pages from json
-//        var loadedPages = FileManager.default.decode([Page].self, from: "pages.json")
-//        print(loadedPages)
-//        // check if todaypage already exists in loadedpages
-//        for (index, page) in loadedPages.enumerated() {
-//            if fullDate.contains(page.day) && fullDate.contains(page.month) {
-//                // remove old page if there is one
-//                loadedPages.remove(at: index)
-//                print(loadedPages)
-//            }
-//        }
-//        // insert todaypage in loadedpages
-//        loadedPages.append(todayPage)
-//        print(loadedPages)
-//        // encode new pages and write it back to json
-//        FileManager.default.writePagesToDocumentsFolder(pages: loadedPages, to: "pages.json")
-//    }
+    func savePageToDocumentsFolder() {
+        // Create a date from now so it can be compared
+        let todayDate = Date()
+        let formatter = DateFormatter()
+        formatter.locale = Locale.autoupdatingCurrent
+        
+        formatter.dateFormat = "dd-MM-yyyy"
+        let filename = formatter.string(from: todayDate) + ".json"
+        
+        let path = FileManager.default.getDocumentsDirectory().appendingPathComponent(filename)
+        
+        // Encode the new page and write it to the correct file aka the JSON page of today
+        let data = FileManager.default.encode(todayPage)
+        
+        do {
+            try data.write(to: path, options: .atomic)
+        } catch {
+            fatalError("🔴 Failed to write new page data in JSON file in Documents folder: \(error.localizedDescription)")
+        }
+    }
 }

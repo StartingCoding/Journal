@@ -88,19 +88,4 @@ extension FileManager {
             }
         }
     }
-    
-    // TODO: make single JSON pages for days instead of one long pages.json
-//    func writePagesToDocumentsFolder(pages: [Page], to file: String) {
-//        let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
-//        let file: FileHandle? = FileHandle(forUpdatingAtPath: filePath.path)
-//
-//        if file == nil {
-//            fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
-//        } else {
-//            // Enocde new pages
-//            let data = FileManager.default.encode(pages)
-//            file?.write(data)
-//            file?.closeFile()
-//        }
-//    }
 }
