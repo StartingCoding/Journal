@@ -9,34 +9,36 @@ import SwiftUI
 
 struct DayView: View {
     @ObservedObject var todayPage: TodayPage
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Divider()
-                
-                ForEach(0..<todayPage.years.count) { row in
-                    HStack {
-                        Text("\(todayPage.years[row])")
-                            .underline(true, color: .yellow)
-                            .fontWeight(.bold)
-                            .padding(.leading)
-                        Spacer()
-                        DayCard(text: $todayPage.texts[row], fullDate: todayPage.pageDate + ", \(todayPage.years[row])")
-                            .environmentObject(todayPage)
-                    }
+        VStack {
+            Divider()
+            
+            ForEach(0..<todayPage.years.count) { row in
+                HStack {
+                    Text("\(todayPage.years[row])")
+                        .underline(true, color: .yellow)
+                        .fontWeight(.bold)
+                        .padding(.leading)
+                    Spacer()
+                    DayCard(text: $todayPage.texts[row], fullDate: todayPage.pageDate + ", \(todayPage.years[row])")
+                        .environmentObject(todayPage)
                 }
-                
-                Divider()
             }
-            // Views Modifiers for Navigation
-            .navigationBarTitle(Text(todayPage.pageDate))
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button("🗓") {  },
-                trailing: Button("👤") {  }
-            )
+            
+            Divider()
         }
+        // Views Modifiers for Navigation
+        .navigationBarTitle(Text(todayPage.pageDate))
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(
+            leading: Button("🗓") {
+                presentationMode.wrappedValue.dismiss()
+            },
+            trailing: Button("👤") {  }
+        )
     }
 }
 

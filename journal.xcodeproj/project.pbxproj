@@ -17,6 +17,7 @@
 		AB99E39C258A5B1F00FE1B1B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB99E39B258A5B1F00FE1B1B /* Preview Assets.xcassets */; };
 		AB9C43EC258B9D0B00345A74 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9C43EB258B9D0B00345A74 /* Page.swift */; };
 		ABAD935D25B09D8700ABC0AA /* DayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAD935C25B09D8700ABC0AA /* DayCard.swift */; };
+		ABC25A9A25CE9BE000D56C84 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC25A9925CE9BE000D56C84 /* CalendarView.swift */; };
 		ABD7E93425C5B158000FA729 /* FileManager+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD7E93325C5B158000FA729 /* FileManager+Utils.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		AB99E39D258A5B1F00FE1B1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB9C43EB258B9D0B00345A74 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		ABAD935C25B09D8700ABC0AA /* DayCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCard.swift; sourceTree = "<group>"; };
+		ABC25A9925CE9BE000D56C84 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		ABD7E93325C5B158000FA729 /* FileManager+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				AB99E396258A5B1A00FE1B1B /* DayView.swift */,
+				ABC25A9925CE9BE000D56C84 /* CalendarView.swift */,
 				ABAD935C25B09D8700ABC0AA /* DayCard.swift */,
 				AB175A2E2594CCC7003436B4 /* ChangeView.swift */,
 				AB91BE3125963D460092C552 /* CustomTextField.swift */,
@@ -189,6 +192,7 @@
 				AB91BE3225963D460092C552 /* CustomTextField.swift in Sources */,
 				AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */,
 				AB9C43EC258B9D0B00345A74 /* Page.swift in Sources */,
+				ABC25A9A25CE9BE000D56C84 /* CalendarView.swift in Sources */,
 				ABAD935D25B09D8700ABC0AA /* DayCard.swift in Sources */,
 				AB175A2F2594CCC7003436B4 /* ChangeView.swift in Sources */,
 				AB4FFE7F258BA30100708D39 /* TodayPage.swift in Sources */,
