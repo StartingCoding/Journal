@@ -10,6 +10,7 @@ import SwiftUI
 struct DayView: View {
     @ObservedObject var todayPage: TodayPage
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @GestureState private var dragOffset = CGSize.zero
     
     var body: some View {
         VStack {
@@ -29,6 +30,11 @@ struct DayView: View {
             
             Divider()
         }
+        .highPriorityGesture(DragGesture().updating($dragOffset, body: { (value, state, transaction) in
+            if (value.startLocation.x < 150) && value.translation.width > 20 {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }))
         // Views Modifiers for Navigation
         .navigationBarTitle(Text(todayPage.pageDate))
         .navigationBarTitleDisplayMode(.inline)
