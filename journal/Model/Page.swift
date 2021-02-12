@@ -14,3 +14,4 @@ struct Page: Codable {
     var allTexts: [String]
     var pageContent: [String: String]
 }
+ 

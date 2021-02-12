@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		AB15144F25C1AEA400105299 /* pages.json in Resources */ = {isa = PBXBuildFile; fileRef = AB15144E25C1AEA400105299 /* pages.json */; };
 		AB175A2F2594CCC7003436B4 /* ChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB175A2E2594CCC7003436B4 /* ChangeView.swift */; };
 		AB4FFE7F258BA30100708D39 /* TodayPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FFE7E258BA30100708D39 /* TodayPage.swift */; };
+		AB81261125D29429002F6D1A /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = AB81261025D29429002F6D1A /* SwiftDate */; };
 		AB91BE3225963D460092C552 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91BE3125963D460092C552 /* CustomTextField.swift */; };
 		AB99E395258A5B1A00FE1B1B /* journalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB99E394258A5B1A00FE1B1B /* journalApp.swift */; };
 		AB99E397258A5B1A00FE1B1B /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB99E396258A5B1A00FE1B1B /* DayView.swift */; };
@@ -20,6 +21,19 @@
 		ABC25A9A25CE9BE000D56C84 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC25A9925CE9BE000D56C84 /* CalendarView.swift */; };
 		ABD7E93425C5B158000FA729 /* FileManager+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD7E93325C5B158000FA729 /* FileManager+Utils.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AB81260E25D29257002F6D1A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AB15144E25C1AEA400105299 /* pages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pages.json; sourceTree = "<group>"; };
@@ -43,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB81261125D29429002F6D1A /* SwiftDate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,12 +142,16 @@
 				AB99E38D258A5B1A00FE1B1B /* Sources */,
 				AB99E38E258A5B1A00FE1B1B /* Frameworks */,
 				AB99E38F258A5B1A00FE1B1B /* Resources */,
+				AB81260E25D29257002F6D1A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = journal;
+			packageProductDependencies = (
+				AB81261025D29429002F6D1A /* SwiftDate */,
+			);
 			productName = journal;
 			productReference = AB99E391258A5B1A00FE1B1B /* journal.app */;
 			productType = "com.apple.product-type.application";
@@ -160,6 +179,9 @@
 				Base,
 			);
 			mainGroup = AB99E388258A5B1A00FE1B1B;
+			packageReferences = (
+				AB81260F25D29429002F6D1A /* XCRemoteSwiftPackageReference "SwiftDate" */,
+			);
 			productRefGroup = AB99E392258A5B1A00FE1B1B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -384,6 +406,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AB81260F25D29429002F6D1A /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftDate";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.3.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AB81261025D29429002F6D1A /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB81260F25D29429002F6D1A /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AB99E389258A5B1A00FE1B1B /* Project object */;
 }
