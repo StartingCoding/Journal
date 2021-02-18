@@ -27,7 +27,7 @@ struct DayCard: View {
             isShowing.toggle()
         }
         .sheet(isPresented: $isShowing) {
-            todayPage.savePageToDocumentsFolder()
+//            todayPage.savePageToDocumentsFolder()
         } content: {
             ChangeView(text: $text, fullDate: fullDate, isShowing: $isShowing)
                 .environmentObject(todayPage)

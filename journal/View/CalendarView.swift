@@ -14,9 +14,9 @@ struct CalendarView: View {
     var body: some View {
         NavigationView {
             GroupBox(label: Text("Years")) {
-                List(todayPage.years, id: \.self) { year in
+                List(todayPage.calendarContent, id: \.name, children: \.subCalModel) { item in
                     NavigationLink(destination: DayView(todayPage: todayPage)) {
-                        Text("\(year)")
+                        Text("\(item.name)")
                     }
                 }
             }

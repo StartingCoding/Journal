@@ -51,13 +51,13 @@ extension FileManager {
         return paths[0]
     }
     
-    func writeBlankTodayPageToDocumentsFolder(_ page: Page, to file: String) {
-        // Create an empty file if there is none
-        let isEmptyFileCreated = FileManager.default.createEmptyFile(to: file)
-        
-        // If file is empty aka 0 pages -> write 1 blankTodayPage
-        FileManager.default.checkAndWriteBlankTodayPage(isEmptyFileCreated, page: page, to: file)
-    }
+//    func writeBlankTodayPageToDocumentsFolder(_ page: Page, to file: String) {
+//        // Create an empty file if there is none
+//        let isEmptyFileCreated = FileManager.default.createEmptyFile(to: file)
+//
+//        // If file is empty aka 0 pages -> write 1 blankTodayPage
+//        FileManager.default.checkAndWriteBlankTodayPage(isEmptyFileCreated, page: page, to: file)
+//    }
     
     func createEmptyFile(to file: String) -> Bool {
         let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
@@ -70,22 +70,22 @@ extension FileManager {
         }
     }
     
-    func checkAndWriteBlankTodayPage(_ isEmptyFileCreated: Bool, page: Page, to file: String) {
-        let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
-        let file: FileHandle? = FileHandle(forUpdatingAtPath: filePath.path)
-        
-        if file == nil {
-            fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
-        } else {
-            let data = FileManager.default.encode(page)
-            
-            if isEmptyFileCreated {
-                // If file is empty aka 0 pages -> write 1 blankTodayPage
-                file?.write(data)
-                file?.closeFile()
-            } else {
-                file?.closeFile()
-            }
-        }
-    }
+//    func checkAndWriteBlankTodayPage(_ isEmptyFileCreated: Bool, page: Page, to file: String) {
+//        let filePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(file)
+//        let file: FileHandle? = FileHandle(forUpdatingAtPath: filePath.path)
+//        
+//        if file == nil {
+//            fatalError("🔴 Failed to create a FileHandle for JSON file, make sure it exists first before using it")
+//        } else {
+//            let data = FileManager.default.encode(page)
+//            
+//            if isEmptyFileCreated {
+//                // If file is empty aka 0 pages -> write 1 blankTodayPage
+//                file?.write(data)
+//                file?.closeFile()
+//            } else {
+//                file?.closeFile()
+//            }
+//        }
+//    }
 }
