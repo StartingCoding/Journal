@@ -10,23 +10,14 @@ import SwiftDate
 
 struct CalendarView: View {
     @ObservedObject var todayPage: TodayPage
-    @State private var revealDetails = false
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                CalendarListView(calendarContent: todayPage.calendarContent)
-                Spacer()
-                
-//                List(todayPage.calendarContent, id: \.name, children: \.subCalModel) { item in
-//                    if item.subCalModel == nil {
-//                        NavigationLink(destination: DayView(todayPage: todayPage)) {
-//                            Text("\(item.name)")
-//                        }
-//                    } else {
-//                        Text(item.name)
-//                    }
-//                }
+            ScrollView(.vertical) {
+                VStack(alignment: .leading) {
+                    CalendarListView(calendarContent: todayPage.calendarContent)
+                    Spacer()
+                }
             }
             .background(Color.gray)
             .navigationBarTitle(Text("🗓"))
@@ -35,48 +26,115 @@ struct CalendarView: View {
     }
 }
 
+
+// MARK: List
 struct CalendarListView: View {
     var calendarContent: [CalModel]
-    
-    @State private var yearsBool = false
-    @State private var yearBool = false
+    @State private var showingYears = false
     
     var body: some View {
         Button(action: {
-            yearsBool.toggle()
+            showingYears.toggle()
         }, label: {
             HStack {
                 Text("5 Years")
                     .foregroundColor(Color.primary)
                 Spacer()
-                Image(systemName: yearsBool ? "chevron.down" : "chevron.right")
+                Image(systemName: showingYears ? "chevron.down" : "chevron.right")
             }
             .padding()
         })
         
-        if yearsBool {
-            ForEach(calendarContent, id: \.name) { year in
-                Button(action: {
-                    yearBool.toggle()
-                }, label: {
-                    HStack {
-                        Text(year.name)
-                            .foregroundColor(Color.primary)
-                        Spacer()
-                        Image(systemName: yearsBool ? "chevron.down" : "chevron.right")
-                    }
-                    .padding()
-                })
-                
-                if yearBool {
-                    if let subCal = year.subCalModel {
-                        ForEach(subCal, id: \.name) { item in
-                            Text("\(item.name)")
-                        }
-                    }
+        if showingYears {
+            CalendarYearRowView(calendarContent: calendarContent)
+        }
+    }
+}
+
+
+// MARK: Year Row
+struct CalendarYearRowView: View {
+    var calendarContent: [CalModel]
+    @State private var showingMonths: [Bool]
+    
+    var body: some View {
+        ForEach(0..<calendarContent.count) { index in
+            Button(action: {
+                showingMonths[index].toggle()
+            }, label: {
+                HStack {
+                    Text(calendarContent[index].name)
+                        .foregroundColor(Color.primary)
+                    Spacer()
+                    Image(systemName: showingMonths[index] ? "chevron.down" : "chevron.right")
                 }
+                .padding()
+            })
+            
+            if showingMonths[index] {
+                CalendarMonthRowView(year: calendarContent[index])
             }
         }
+    }
+    
+    init(calendarContent: [CalModel]) {
+        self.calendarContent = calendarContent
+        self._showingMonths = State(initialValue: Array(repeating: false, count: calendarContent.count))
+    }
+}
+
+
+// MARK: Month Row
+struct CalendarMonthRowView: View {
+    var year: CalModel
+    var months: [CalModel]
+    
+    @State private var showingDays: [Bool]
+    
+    var body: some View {
+        ForEach(0..<months.count) { index in
+            Button(action: {
+                showingDays[index].toggle()
+            }, label: {
+                HStack {
+                    Text(months[index].name)
+                        .foregroundColor(Color.primary)
+                        .padding(.leading)
+                    Spacer()
+                    Image(systemName: showingDays[index] ? "chevron.down" : "chevron.right")
+                }
+                .padding()
+            })
+            
+            if showingDays[index] {
+                Text("Success!")
+                    .padding()
+                    .padding(.leading)
+                    .padding(.leading)
+            }
+        }
+    }
+    
+    init(year: CalModel) {
+        self.year = year
+        
+        if let months = self.year.subCalModel {
+            self.months = months
+        } else {
+            fatalError("🔴 Months not found in a specific year")
+        }
+        
+        self._showingDays = State(initialValue: Array(repeating: false, count: months.count))
+    }
+}
+
+
+// MARK: Day Row
+struct CalendarDayRowView: View {
+    var month: CalModel
+    
+    var body: some View {
+        Text("\(month.name)")
     }
 }
 
