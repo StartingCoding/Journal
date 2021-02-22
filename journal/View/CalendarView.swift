@@ -52,15 +52,15 @@ struct CalendarYearRowView: View {
     var calendarContent: [CalModel]
     var yearsBool: Bool
     
-    @State private var yearBool = false
+    @State private var yearBool: [Bool]
     
     var body: some View {
-        ForEach(calendarContent, id: \.name) { year in
+        ForEach(0..<calendarContent.count) { index in
             Button(action: {
-                yearBool.toggle()
+                yearBool[index].toggle()
             }, label: {
                 HStack {
-                    Text(year.name)
+                    Text(calendarContent[index].name)
                         .foregroundColor(Color.primary)
                     Spacer()
                     Image(systemName: yearsBool ? "chevron.down" : "chevron.right")
@@ -68,10 +68,17 @@ struct CalendarYearRowView: View {
                 .padding()
             })
             
-            if yearBool {
-                CalendarMonthRowView(year: year)
+            if yearBool[index] {
+                CalendarMonthRowView(year: calendarContent[index])
             }
         }
+    }
+    
+    init(calendarContent: [CalModel], yearsBool: Bool) {
+        self.calendarContent = calendarContent
+        self.yearsBool = yearsBool
+        
+        self._yearBool = State(initialValue: Array(repeating: false, count: calendarContent.count))
     }
 }
 
