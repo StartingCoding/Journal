@@ -13,9 +13,11 @@ struct CalendarView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                CalendarListView(calendarContent: todayPage.calendarContent)
-                Spacer()
+            ScrollView(.vertical) {
+                VStack(alignment: .leading) {
+                    CalendarListView(calendarContent: todayPage.calendarContent)
+                    Spacer()
+                }
             }
             .background(Color.gray)
             .navigationBarTitle(Text("🗓"))
