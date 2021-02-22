@@ -30,7 +30,6 @@ struct CalendarView: View {
 // MARK: List
 struct CalendarListView: View {
     var calendarContent: [CalModel]
-    
     @State private var showingYears = false
     
     var body: some View {
@@ -47,7 +46,7 @@ struct CalendarListView: View {
         })
         
         if showingYears {
-            CalendarYearRowView(calendarContent: calendarContent, yearsBool: showingYears)
+            CalendarYearRowView(calendarContent: calendarContent)
         }
     }
 }
@@ -56,35 +55,31 @@ struct CalendarListView: View {
 // MARK: Year Row
 struct CalendarYearRowView: View {
     var calendarContent: [CalModel]
-    var yearsBool: Bool
-    
-    @State private var yearBool: [Bool]
+    @State private var showingMonths: [Bool]
     
     var body: some View {
         ForEach(0..<calendarContent.count) { index in
             Button(action: {
-                yearBool[index].toggle()
+                showingMonths[index].toggle()
             }, label: {
                 HStack {
                     Text(calendarContent[index].name)
                         .foregroundColor(Color.primary)
                     Spacer()
-                    Image(systemName: yearsBool ? "chevron.down" : "chevron.right")
+                    Image(systemName: showingMonths[index] ? "chevron.down" : "chevron.right")
                 }
                 .padding()
             })
             
-            if yearBool[index] {
-                CalendarMonthRowView(year: calendarContent[index], showingMonth: yearBool[index])
+            if showingMonths[index] {
+                CalendarMonthRowView(year: calendarContent[index])
             }
         }
     }
     
-    init(calendarContent: [CalModel], yearsBool: Bool) {
+    init(calendarContent: [CalModel]) {
         self.calendarContent = calendarContent
-        self.yearsBool = yearsBool
-        
-        self._yearBool = State(initialValue: Array(repeating: false, count: calendarContent.count))
+        self._showingMonths = State(initialValue: Array(repeating: false, count: calendarContent.count))
     }
 }
 
@@ -95,7 +90,6 @@ struct CalendarMonthRowView: View {
     var months: [CalModel]
     
     @State private var showingDays: [Bool]
-    var showingMonth: Bool
     
     var body: some View {
         ForEach(0..<months.count) { index in
@@ -105,19 +99,23 @@ struct CalendarMonthRowView: View {
                 HStack {
                     Text(months[index].name)
                         .foregroundColor(Color.primary)
+                        .padding(.leading)
                     Spacer()
-                    Image(systemName: showingMonth ? "chevron.down" : "chevron.right")
+                    Image(systemName: showingDays[index] ? "chevron.down" : "chevron.right")
                 }
                 .padding()
             })
             
             if showingDays[index] {
                 Text("Success!")
+                    .padding()
+                    .padding(.leading)
+                    .padding(.leading)
             }
         }
     }
     
-    init(year: CalModel, showingMonth: Bool) {
+    init(year: CalModel) {
         self.year = year
         
         if let months = self.year.subCalModel {
@@ -127,7 +125,6 @@ struct CalendarMonthRowView: View {
         }
         
         self._showingDays = State(initialValue: Array(repeating: false, count: months.count))
-        self.showingMonth = showingMonth
     }
 }
 
