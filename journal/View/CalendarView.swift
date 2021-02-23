@@ -9,24 +9,25 @@ import SwiftUI
 import SwiftDate
 
 struct CalendarView: View {
-    @ObservedObject var todayPage: CalendarPage
+    @ObservedObject var calendarPage: CalendarPage
     
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    CalendarListView(calendarContent: todayPage.calendarContent)
+                    CalendarListView(calendarContent: calendarPage.calendarContent)
                     Spacer()
                 }
             }
             .navigationBarTitle(Text("🗓"))
             .navigationBarTitleDisplayMode(.large)
         }
+        .environmentObject(calendarPage)
     }
 }
 
 
-// MARK: List
+// MARK: List of Years
 struct CalendarListView: View {
     var calendarContent: [CalModel]
     @State private var showingYears = false
@@ -130,9 +131,11 @@ struct CalendarDayRowView: View {
     var month: CalModel
     var days: [CalModel]
     
+    @EnvironmentObject var calendarPage: CalendarPage
+    
     var body: some View {
         ForEach(days, id: \.name) { day in
-            NavigationLink(destination: DayView(todayPage: CalendarPage())) {
+            NavigationLink(destination: DayView(day: month.name + " " + day.name, todayPage: calendarPage)) {
                 HStack {
                     Text("Day \(day.name)")
                         .foregroundColor(Color.primary)
@@ -159,6 +162,6 @@ struct CalendarDayRowView: View {
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(todayPage: CalendarPage())
+        CalendarView(calendarPage: CalendarPage())
     }
 }

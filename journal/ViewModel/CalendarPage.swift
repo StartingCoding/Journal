@@ -17,17 +17,7 @@ class CalendarPage: ObservableObject {
     let monthsString = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     
     init() {
-        let actualYear = Date().year
-        let content = [
-            ["year 1", "text 1"],
-            ["year 2", "text 2"],
-            ["year 3", "text 3"],
-            ["year 4", "text 4"],
-            ["year 5", "text 5"]
-        ]
-        
         var mArray = [CalModel]()
-        var yArray = [CalModel]()
         
         // Making months
         for month in 0...11 {
@@ -45,9 +35,17 @@ class CalendarPage: ObservableObject {
             mArray.append(calMod)
         }
         
+        var yArray = [CalModel]()
+        let actualYear = Date().year
+        
+        var content = [[String]]()
+        
         // Making Years
-        for num in 0...4 {
-            let calMod = CalModel(name: "\(actualYear + num)", subCalModel: mArray)
+        for yearIterator in 0...4 {
+            // Make content of a day based on years
+            content.append(["\(actualYear + yearIterator)", "Text \(yearIterator)"])
+            
+            let calMod = CalModel(name: "\(actualYear + yearIterator)", subCalModel: mArray)
             yArray.append(calMod)
         }
         
