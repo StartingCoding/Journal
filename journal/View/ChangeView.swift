@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChangeView: View {
-    @EnvironmentObject var todayPage: TodayPage
+    @EnvironmentObject var todayPage: CalendarPage
     
     @Binding var text: String
     var fullDate: String
@@ -43,7 +43,7 @@ struct ChangeView: View {
 
 struct ChangeView_Previews: PreviewProvider {
     static var previews: some View {
-        let todayPage = TodayPage()
+        let todayPage = CalendarPage()
         
         ChangeView(text: Binding.constant(todayPage.texts[0]), fullDate: todayPage.pageDate + ", \(todayPage.years[0])", isShowing: Binding.constant(true))
     }

@@ -9,7 +9,7 @@
 
 import Foundation
 
-class TodayPage: ObservableObject {
+class CalendarPage: ObservableObject {
     // MARK: - Model
     @Published private var dayContent: [DayModel]
     var calendarContent: [CalModel]
@@ -26,15 +26,26 @@ class TodayPage: ObservableObject {
             ["year 5", "text 5"]
         ]
         
+//        var dArray = [CalModel]()
         var mArray = [CalModel]()
         var yArray = [CalModel]()
         
-        for num in 0...11 {
+        // Making months
+        for month in 0...11 {
+            let dateMonth = Date {
+                $0.month = month + 1
+            }
+            var dArray = [CalModel]()
+            for day in 1...dateMonth!.monthDays {
+                let calMod = CalModel(name: "\(day)")
+                dArray.append(calMod)
+            }
             
-            let calMod = CalModel(name: monthsString[num])
+            let calMod = CalModel(name: monthsString[month], subCalModel: dArray)
             mArray.append(calMod)
         }
         
+        // Making Years
         for num in 0...4 {
             let calMod = CalModel(name: "\(actualYear + num)", subCalModel: mArray)
             yArray.append(calMod)
@@ -45,59 +56,6 @@ class TodayPage: ObservableObject {
         let dMod = DayModel(content: content)
         dayContent = [dMod]
     }
-    
-//    static func makeTodayPage() -> Page {
-//        // Create a date from now so it can be compared
-//        let todayDate = Date()
-//        let formatter = DateFormatter()
-//        formatter.locale = Locale.autoupdatingCurrent
-//
-//        formatter.dateFormat = "dd-MM-yyyy"
-//        let filename = formatter.string(from: todayDate) + ".json"
-//        // Loading pages from Documents folder by FileManager
-//        let pageLoaded = TodayPage.loadTodayPage(decoding: Page.self, from: filename)
-//
-//        return pageLoaded
-//    }
-    
-//    static func loadTodayPage<T: Decodable>(decoding type: T.Type, from filename: String) -> T {
-//        let filenamePath = FileManager.default.getDocumentsDirectory().appendingPathComponent(filename)
-//
-//        // If the file doesn't exists, write it a new one with just one blank page taken from today
-//        if FileManager.default.fileExists(atPath: filenamePath.path) == false {
-//            let blankTodayPage = TodayPage.makeBlankTodayPage()
-//            FileManager.default.writeBlankTodayPageToDocumentsFolder(blankTodayPage, to: filename)
-//        }
-//
-//        return FileManager.default.decode(T.self, from: filename)
-//    }
-    
-//    static func makeBlankTodayPage() -> Page {
-//        let formatter = DateFormatter()
-//        let todayDate = Date()
-//        formatter.locale = Locale.autoupdatingCurrent
-//
-//        formatter.setLocalizedDateFormatFromTemplate("dd")
-//        let todayDay = formatter.string(from: todayDate)
-//
-//        formatter.setLocalizedDateFormatFromTemplate("MMMM")
-//        let todayMonth = formatter.string(from: todayDate)
-//
-//        formatter.setLocalizedDateFormatFromTemplate("yyyy")
-//        let todayYear = formatter.string(from: todayDate)
-//
-//        var years = [Int]()
-//        var texts = [String]()
-//        let placeholder = "---------------------------------------------------------------------------------------------"
-//        for iterator in 0..<5 {
-//            years.append(Int(todayYear)! + iterator)
-//            texts.append(placeholder)
-//        }
-//
-//        let blankPage = Page(day: todayDay, month: todayMonth, allYears: years, allTexts: texts, pageContent: [String : String]())
-//        return blankPage
-//    }
-    
     
     // MARK: - Access to the Model
     var years: [String] {
@@ -162,5 +120,4 @@ class TodayPage: ObservableObject {
     }
     
     // MARK: - Intent
-    
 }

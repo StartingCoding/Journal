@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftDate
 
 struct CalendarView: View {
-    @ObservedObject var todayPage: TodayPage
+    @ObservedObject var todayPage: CalendarPage
     
     var body: some View {
         NavigationView {
@@ -107,10 +107,7 @@ struct CalendarMonthRowView: View {
             })
             
             if showingDays[index] {
-                Text("Success!")
-                    .padding()
-                    .padding(.leading)
-                    .padding(.leading)
+                CalendarDayRowView(month: months[index])
             }
         }
     }
@@ -121,7 +118,7 @@ struct CalendarMonthRowView: View {
         if let months = self.year.subCalModel {
             self.months = months
         } else {
-            fatalError("🔴 Months not found in a specific year")
+            fatalError("🔴 Months not founded in a specific year")
         }
         
         self._showingDays = State(initialValue: Array(repeating: false, count: months.count))
@@ -132,14 +129,30 @@ struct CalendarMonthRowView: View {
 // MARK: Day Row
 struct CalendarDayRowView: View {
     var month: CalModel
+    var days: [CalModel]
     
     var body: some View {
-        Text("\(month.name)")
+        ForEach(days, id: \.name) { day in
+            Text(day.name)
+                .padding()
+                .padding(.leading)
+                .padding(.leading)
+        }
+    }
+    
+    init(month: CalModel) {
+        self.month = month
+        
+        if let days = self.month.subCalModel {
+            self.days = days
+        } else {
+            fatalError("🔴 Months not founded in a aspecific month")
+        }
     }
 }
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(todayPage: TodayPage())
+        CalendarView(todayPage: CalendarPage())
     }
 }
