@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DayCard: View {
-    @EnvironmentObject var todayPage: TodayPage
+    @EnvironmentObject var todayPage: CalendarPage
     @Binding var text: String
     var fullDate: String
     
@@ -61,7 +61,7 @@ struct Content: View {
 
 struct DayCard_Previews: PreviewProvider {
     static var previews: some View {
-        let todayPage = TodayPage()
+        let todayPage = CalendarPage()
         
         DayCard(text: Binding.constant(todayPage.texts[1]), fullDate: todayPage.day)
     }

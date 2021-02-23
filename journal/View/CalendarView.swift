@@ -9,25 +9,25 @@ import SwiftUI
 import SwiftDate
 
 struct CalendarView: View {
-    @ObservedObject var todayPage: TodayPage
+    @ObservedObject var calendarPage: CalendarPage
     
     var body: some View {
         NavigationView {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    CalendarListView(calendarContent: todayPage.calendarContent)
+                    CalendarListView(calendarContent: calendarPage.calendarContent)
                     Spacer()
                 }
             }
-            .background(Color.gray)
             .navigationBarTitle(Text("🗓"))
             .navigationBarTitleDisplayMode(.large)
         }
+        .environmentObject(calendarPage)
     }
 }
 
 
-// MARK: List
+// MARK: List of Years
 struct CalendarListView: View {
     var calendarContent: [CalModel]
     @State private var showingYears = false
@@ -107,10 +107,7 @@ struct CalendarMonthRowView: View {
             })
             
             if showingDays[index] {
-                Text("Success!")
-                    .padding()
-                    .padding(.leading)
-                    .padding(.leading)
+                CalendarDayRowView(month: months[index])
             }
         }
     }
@@ -121,7 +118,7 @@ struct CalendarMonthRowView: View {
         if let months = self.year.subCalModel {
             self.months = months
         } else {
-            fatalError("🔴 Months not found in a specific year")
+            fatalError("🔴 Months not founded in a specific year")
         }
         
         self._showingDays = State(initialValue: Array(repeating: false, count: months.count))
@@ -132,14 +129,39 @@ struct CalendarMonthRowView: View {
 // MARK: Day Row
 struct CalendarDayRowView: View {
     var month: CalModel
+    var days: [CalModel]
+    
+    @EnvironmentObject var calendarPage: CalendarPage
     
     var body: some View {
-        Text("\(month.name)")
+        ForEach(days, id: \.name) { day in
+            NavigationLink(destination: DayView(day: month.name + " " + day.name, todayPage: calendarPage)) {
+                HStack {
+                    Text("Day \(day.name)")
+                        .foregroundColor(Color.primary)
+                        .padding(.leading)
+                        .padding(.leading)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+                .padding()
+            }
+        }
+    }
+    
+    init(month: CalModel) {
+        self.month = month
+        
+        if let days = self.month.subCalModel {
+            self.days = days
+        } else {
+            fatalError("🔴 Months not founded in a aspecific month")
+        }
     }
 }
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView(todayPage: TodayPage())
+        CalendarView(calendarPage: CalendarPage())
     }
 }
