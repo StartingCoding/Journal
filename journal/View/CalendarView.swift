@@ -19,7 +19,6 @@ struct CalendarView: View {
                     Spacer()
                 }
             }
-            .background(Color.gray)
             .navigationBarTitle(Text("🗓"))
             .navigationBarTitleDisplayMode(.large)
         }
@@ -133,10 +132,17 @@ struct CalendarDayRowView: View {
     
     var body: some View {
         ForEach(days, id: \.name) { day in
-            Text(day.name)
+            NavigationLink(destination: DayView(todayPage: CalendarPage())) {
+                HStack {
+                    Text("Day \(day.name)")
+                        .foregroundColor(Color.primary)
+                        .padding(.leading)
+                        .padding(.leading)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
                 .padding()
-                .padding(.leading)
-                .padding(.leading)
+            }
         }
     }
     

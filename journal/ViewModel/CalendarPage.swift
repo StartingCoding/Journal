@@ -26,12 +26,12 @@ class CalendarPage: ObservableObject {
             ["year 5", "text 5"]
         ]
         
-//        var dArray = [CalModel]()
         var mArray = [CalModel]()
         var yArray = [CalModel]()
         
         // Making months
         for month in 0...11 {
+            // Making days based on months
             let dateMonth = Date {
                 $0.month = month + 1
             }
