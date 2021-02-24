@@ -135,7 +135,7 @@ struct CalendarDayRowView: View {
     
     var body: some View {
         ForEach(days, id: \.name) { day in
-            NavigationLink(destination: DayView(day: month.name + " " + day.name, todayPage: calendarPage)) {
+            NavigationLink(destination: DayView(date: month.name + " " + day.name, todayPage: calendarPage)) {
                 HStack {
                     Text("Day \(day.name)")
                         .foregroundColor(Color.primary)

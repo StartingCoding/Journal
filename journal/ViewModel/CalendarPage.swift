@@ -72,15 +72,11 @@ class CalendarPage: ObservableObject {
     
     // MARK: - Access to the Model
     var years: [String] {
-        let dayArray = dayContent[(Int(month) ?? 1) - 1].content
-        
-        var result = [String]()
-        
-        dayArray.forEach({ content in
-            result.append(content[0])
-        })
-        
-        return result.sorted()
+        var allYears = [String]()
+        for year in calendarContent {
+            allYears.append(year.name)
+        }
+        return allYears
     }
     
     var texts: [String] {
@@ -108,29 +104,29 @@ class CalendarPage: ObservableObject {
         }
     }
     
-    var months: [String] {
-        let monhtsCount = dayContent.count
-        var result = [String]()
-        
-        for actualMonth in 0...monhtsCount {
-            result.append(monthsString[actualMonth])
-        }
-        
-        return result
-    }
+//    var months: [String] {
+//        let monhtsCount = dayContent.count
+//        var result = [String]()
+//        
+//        for actualMonth in 0...monhtsCount {
+//            result.append(monthsString[actualMonth])
+//        }
+//        
+//        return result
+//    }
     
     var month: String {
         let month = Date().month
         return monthsString[month]
     }
     
-    var day: String {
-        String(Date().day)
-    }
+//    var day: String {
+//        String(Date().day)
+//    }
     
-    var pageDate: String {
-        month + " " + day
-    }
+//    var pageDate: String {
+//        month + " " + day
+//    }
     
     // MARK: - Intent
 }

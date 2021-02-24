@@ -63,7 +63,7 @@ struct DayCard_Previews: PreviewProvider {
     static var previews: some View {
         let todayPage = CalendarPage()
         
-        DayCard(text: Binding.constant(todayPage.texts[1]), fullDate: todayPage.day)
+        DayCard(text: Binding.constant(todayPage.texts[1]), fullDate: "January 1" + ", \(todayPage.years[0])")
     }
 }
 
