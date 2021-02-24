@@ -8,6 +8,7 @@
 // https://matteomanferdini.com/codable/
 
 import Foundation
+import SwiftDate
 
 class CalendarPage: ObservableObject {
     // MARK: - Model
@@ -35,6 +36,7 @@ class CalendarPage: ObservableObject {
             mArray.append(calMod)
         }
         
+        
         var yArray = [CalModel]()
         let actualYear = Date().year
         
@@ -51,8 +53,21 @@ class CalendarPage: ObservableObject {
         
         calendarContent = yArray
         
+        
+        // Calculate how many days are in 5 years from the open of the journal
+        var daysInFiveYears = 0
+        for year in 0...4 {
+            let startDate = DateInRegion(year: Date().year + year, month: 1, day: 1)
+            
+            for month in 0...11 {
+                let monthDate = startDate + month.months
+                daysInFiveYears += monthDate.monthDays
+            }
+        }
+        
+        // Making content for all of the days in the 5 years
         let dMod = DayModel(content: content)
-        dayContent = [dMod]
+        dayContent = Array(repeating: dMod, count: daysInFiveYears)
     }
     
     // MARK: - Access to the Model
