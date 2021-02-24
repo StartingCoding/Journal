@@ -8,6 +8,7 @@
 // https://matteomanferdini.com/codable/
 
 import Foundation
+import SwiftDate
 
 class CalendarPage: ObservableObject {
     // MARK: - Model
@@ -35,6 +36,7 @@ class CalendarPage: ObservableObject {
             mArray.append(calMod)
         }
         
+        
         var yArray = [CalModel]()
         let actualYear = Date().year
         
@@ -43,7 +45,7 @@ class CalendarPage: ObservableObject {
         // Making Years
         for yearIterator in 0...4 {
             // Make content of a day based on years
-            content.append(["\(actualYear + yearIterator)", "Text \(yearIterator)"])
+            content.append(["\(actualYear + yearIterator)", "Text \(Int.random(in: 10...20))"])
             
             let calMod = CalModel(name: "\(actualYear + yearIterator)", subCalModel: mArray)
             yArray.append(calMod)
@@ -51,37 +53,47 @@ class CalendarPage: ObservableObject {
         
         calendarContent = yArray
         
+        
+        // Calculate how many days are in 5 years from the open of the journal
+        var daysInFiveYears = 0
+        for year in 0...4 {
+            let startDate = DateInRegion(year: Date().year + year, month: 1, day: 1)
+            
+            for month in 0...11 {
+                let monthDate = startDate + month.months
+                daysInFiveYears += monthDate.monthDays
+            }
+        }
+        
+        // Making content for all of the days in the 5 years
         let dMod = DayModel(content: content)
-        dayContent = [dMod]
+        dayContent = Array(repeating: dMod, count: daysInFiveYears)
+        print(dayContent)
     }
     
     // MARK: - Access to the Model
     var years: [String] {
-        let dayArray = dayContent[(Int(month) ?? 1) - 1].content
-        
-        var result = [String]()
-        
-        dayArray.forEach({ content in
-            result.append(content[0])
-        })
-        
-        return result.sorted()
+        var allYears = [String]()
+        for year in calendarContent {
+            allYears.append(year.name)
+        }
+        return allYears
     }
     
     var texts: [String] {
         get {
-            let dayArray = dayContent[(Int(month) ?? 1) - 1].content
+            let dayArray = dayContent[indexForTexts].content
             
             var result = [String]()
             
             dayArray.forEach({ content in
                 result.append(content[1])
             })
-            
-            return result.sorted()
+            print(indexForTexts)
+            return result
         }
         set {
-            let dayArray = dayContent[(Int(month) ?? 1) - 1].content
+            let dayArray = dayContent[indexForTexts].content
             
             var result = [String]()
             
@@ -93,29 +105,31 @@ class CalendarPage: ObservableObject {
         }
     }
     
-    var months: [String] {
-        let monhtsCount = dayContent.count
-        var result = [String]()
-        
-        for actualMonth in 0...monhtsCount {
-            result.append(monthsString[actualMonth])
-        }
-        
-        return result
-    }
+    var indexForTexts = 0
+    
+//    var months: [String] {
+//        let monhtsCount = dayContent.count
+//        var result = [String]()
+//
+//        for actualMonth in 0...monhtsCount {
+//            result.append(monthsString[actualMonth])
+//        }
+//
+//        return result
+//    }
     
     var month: String {
         let month = Date().month
         return monthsString[month]
     }
     
-    var day: String {
-        String(Date().day)
-    }
+//    var day: String {
+//        String(Date().day)
+//    }
     
-    var pageDate: String {
-        month + " " + day
-    }
+//    var pageDate: String {
+//        month + " " + day
+//    }
     
     // MARK: - Intent
 }

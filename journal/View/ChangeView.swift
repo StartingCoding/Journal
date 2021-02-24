@@ -45,6 +45,6 @@ struct ChangeView_Previews: PreviewProvider {
     static var previews: some View {
         let todayPage = CalendarPage()
         
-        ChangeView(text: Binding.constant(todayPage.texts[0]), fullDate: todayPage.pageDate + ", \(todayPage.years[0])", isShowing: Binding.constant(true))
+        ChangeView(text: Binding.constant(todayPage.texts[0]), fullDate: "January 1" + ", \(todayPage.years[0])", isShowing: Binding.constant(true))
     }
 }

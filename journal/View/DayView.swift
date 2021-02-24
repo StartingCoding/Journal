@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DayView: View {
-    var day: String
+    var date: String
     @ObservedObject var todayPage: CalendarPage
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @GestureState private var dragOffset = CGSize.zero
@@ -24,7 +24,7 @@ struct DayView: View {
                         .fontWeight(.bold)
                         .padding(.leading)
                     Spacer()
-                    DayCard(text: $todayPage.texts[row], fullDate: todayPage.pageDate + ", \(todayPage.years[row])")
+                    DayCard(text: $todayPage.texts[row], fullDate: date + ", \(todayPage.years[row])")
                         .environmentObject(todayPage)
                 }
             }
@@ -37,7 +37,7 @@ struct DayView: View {
             }
         }))
         // Views Modifiers for Navigation
-        .navigationBarTitle(Text(day))
+        .navigationBarTitle(Text(date))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(
@@ -47,12 +47,19 @@ struct DayView: View {
             trailing: Button("👤") {  }
         )
     }
+    
+    init(date: String, todayPage: CalendarPage) {
+        self.date = date
+        self.todayPage = todayPage
+        
+        todayPage.indexForTexts = 1000
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            DayView(day: "1", todayPage: CalendarPage())
+            DayView(date: "1", todayPage: CalendarPage())
         }
     }
 }
