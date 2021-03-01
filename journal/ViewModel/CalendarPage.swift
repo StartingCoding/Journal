@@ -12,7 +12,7 @@ import SwiftDate
 
 class CalendarPage: ObservableObject {
     // MARK: - Model
-    @Published private var dayContent: [DayModel]
+    @Published private var days: [DayModel]
     var calendarContent: [CalendarModel]
     
     let monthsString = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -40,12 +40,12 @@ class CalendarPage: ObservableObject {
         var years = [CalendarModel]()
         let actualYear = Date().year
         
-        var content = [[String]]()
+        var content = [String]()
         
         // Making years for the calendarContent
         for yearIndex in 0...4 {
             // Make content of a day based on years
-            content.append(["\(actualYear + yearIndex)", "Text \(yearIndex)"])
+            content.append("Text \(yearIndex)")
             
             // Make years with months and days
             let calendarModelForYears = CalendarModel(name: "\(actualYear + yearIndex)", subCalendarModel: months)
@@ -67,8 +67,8 @@ class CalendarPage: ObservableObject {
         }
         
         // Making content for all of the days in the 5 years
-        let dMod = DayModel(content: content)
-        dayContent = Array(repeating: dMod, count: daysInFiveYears)
+        let dayModel = DayModel(content: content)
+        days = Array(repeating: dayModel, count: daysInFiveYears)
     }
     
     // MARK: - Access to the Model
@@ -82,53 +82,19 @@ class CalendarPage: ObservableObject {
     
     var texts: [String] {
         get {
-            let dayArray = dayContent[indexForTexts].content
-            var result = [String]()
-            
-            dayArray.forEach({ content in
-                result.append(content[1])
-            })
-            
-            return result
+            days[indexForTexts].content
         }
         set {
-            let dayArray = dayContent[indexForTexts].content
-            
-            var result = [String]()
-            
-            dayArray.forEach({ content in
-                result.append(content[1])
-            })
-            
-            result = newValue
+            days[indexForTexts].content = newValue
         }
     }
     
     var indexForTexts = 0
     
-//    var months: [String] {
-//        let monhtsCount = dayContent.count
-//        var result = [String]()
-//
-//        for actualMonth in 0...monhtsCount {
-//            result.append(monthsString[actualMonth])
-//        }
-//
-//        return result
-//    }
-    
     var month: String {
         let month = Date().month
         return monthsString[month]
     }
-    
-//    var day: String {
-//        String(Date().day)
-//    }
-    
-//    var pageDate: String {
-//        month + " " + day
-//    }
     
     // MARK: - Intent
 }

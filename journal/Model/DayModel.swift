@@ -8,7 +8,7 @@
 import Foundation
 
 struct DayModel {
-    var content: [[String]]
+    var content: [String]
 }
 
 struct CalendarModel {
