@@ -29,7 +29,7 @@ struct CalendarView: View {
 
 // MARK: List of Years
 struct CalendarListView: View {
-    var calendarContent: [CalModel]
+    var calendarContent: [CalendarModel]
     @State private var showingYears = false
     
     var body: some View {
@@ -54,7 +54,7 @@ struct CalendarListView: View {
 
 // MARK: Year Row
 struct CalendarYearRowView: View {
-    var calendarContent: [CalModel]
+    var calendarContent: [CalendarModel]
     @State private var showingMonths: [Bool]
     
     var body: some View {
@@ -77,7 +77,7 @@ struct CalendarYearRowView: View {
         }
     }
     
-    init(calendarContent: [CalModel]) {
+    init(calendarContent: [CalendarModel]) {
         self.calendarContent = calendarContent
         self._showingMonths = State(initialValue: Array(repeating: false, count: calendarContent.count))
     }
@@ -86,8 +86,8 @@ struct CalendarYearRowView: View {
 
 // MARK: Month Row
 struct CalendarMonthRowView: View {
-    var year: CalModel
-    var months: [CalModel]
+    var year: CalendarModel
+    var months: [CalendarModel]
     
     @State private var showingDays: [Bool]
     
@@ -112,10 +112,10 @@ struct CalendarMonthRowView: View {
         }
     }
     
-    init(year: CalModel) {
+    init(year: CalendarModel) {
         self.year = year
         
-        if let months = self.year.subCalModel {
+        if let months = self.year.subCalendarModel {
             self.months = months
         } else {
             fatalError("🔴 Months not founded in a specific year")
@@ -128,8 +128,8 @@ struct CalendarMonthRowView: View {
 
 // MARK: Day Row
 struct CalendarDayRowView: View {
-    var month: CalModel
-    var days: [CalModel]
+    var month: CalendarModel
+    var days: [CalendarModel]
     
     @EnvironmentObject var calendarPage: CalendarPage
     
@@ -149,10 +149,10 @@ struct CalendarDayRowView: View {
         }
     }
     
-    init(month: CalModel) {
+    init(month: CalendarModel) {
         self.month = month
         
-        if let days = self.month.subCalModel {
+        if let days = self.month.subCalendarModel {
             self.days = days
         } else {
             fatalError("🔴 Months not founded in a aspecific month")
