@@ -36,23 +36,15 @@ class CalendarPage: ObservableObject {
             months.append(calendarModelForMonths)
         }
         
-        
-        var years = [CalendarModel]()
-        let actualYear = Date().year
-        
         var content = [String]()
         
         // Making years for the calendarContent
         for yearIndex in 0...4 {
             // Make content of a day based on years
             content.append("Text \(yearIndex)")
-            
-            // Make years with months and days
-            let calendarModelForYears = CalendarModel(name: "\(actualYear + yearIndex)", subCalendarModel: months)
-            years.append(calendarModelForYears)
         }
         
-        calendarContent = years
+        calendarContent = months
         
         // Calculate how many days are in a years from the open of the journal
         var daysInOneYear = 0
@@ -69,8 +61,8 @@ class CalendarPage: ObservableObject {
     // MARK: - Access to the Model
     var years: [String] {
         var allYears = [String]()
-        for year in calendarContent {
-            allYears.append(year.name)
+        for yearIterator in 0..<days[0].content.count {
+            allYears.append(String(Date().year + yearIterator))
         }
         return allYears
     }

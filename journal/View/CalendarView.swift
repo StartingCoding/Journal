@@ -46,47 +46,14 @@ struct CalendarListView: View {
         })
         
         if showingYears {
-            CalendarYearRowView(calendarContent: calendarContent)
+            CalendarMonthRowView(months: calendarContent)
         }
-    }
-}
-
-
-// MARK: Year Row
-struct CalendarYearRowView: View {
-    var calendarContent: [CalendarModel]
-    @State private var showingMonths: [Bool]
-    
-    var body: some View {
-        ForEach(0..<calendarContent.count) { index in
-            Button(action: {
-                showingMonths[index].toggle()
-            }, label: {
-                HStack {
-                    Text(calendarContent[index].name)
-                        .foregroundColor(Color.primary)
-                    Spacer()
-                    Image(systemName: showingMonths[index] ? "chevron.down" : "chevron.right")
-                }
-                .padding()
-            })
-            
-            if showingMonths[index] {
-                CalendarMonthRowView(year: calendarContent[index])
-            }
-        }
-    }
-    
-    init(calendarContent: [CalendarModel]) {
-        self.calendarContent = calendarContent
-        self._showingMonths = State(initialValue: Array(repeating: false, count: calendarContent.count))
     }
 }
 
 
 // MARK: Month Row
 struct CalendarMonthRowView: View {
-    var year: CalendarModel
     var months: [CalendarModel]
     
     @State private var showingDays: [Bool]
@@ -112,15 +79,8 @@ struct CalendarMonthRowView: View {
         }
     }
     
-    init(year: CalendarModel) {
-        self.year = year
-        
-        if let months = self.year.subCalendarModel {
-            self.months = months
-        } else {
-            fatalError("🔴 Months not founded in a specific year")
-        }
-        
+    init(months: [CalendarModel]) {
+        self.months = months
         self._showingDays = State(initialValue: Array(repeating: false, count: months.count))
     }
 }
