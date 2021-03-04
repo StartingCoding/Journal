@@ -54,21 +54,16 @@ class CalendarPage: ObservableObject {
         
         calendarContent = years
         
-        
-        // Calculate how many days are in 5 years from the open of the journal
-        var daysInFiveYears = 0
-        for year in 0...4 {
-            let startDate = DateInRegion(year: Date().year + year, month: 1, day: 1)
-            
-            for month in 0...11 {
-                let monthDate = startDate + month.months
-                daysInFiveYears += monthDate.monthDays
-            }
+        // Calculate how many days are in a years from the open of the journal
+        var daysInOneYear = 0
+        for month in 0...11 {
+            let monthDate = DateInRegion(year: Date().year, month: 1, day: 1) + month.months
+            daysInOneYear += monthDate.monthDays
         }
         
-        // Making content for all of the days in the 5 years
+        // Making day model for all of the days in the 12 months of a year
         let dayModel = DayModel(content: content)
-        days = Array(repeating: dayModel, count: daysInFiveYears)
+        days = Array(repeating: dayModel, count: daysInOneYear)
     }
     
     // MARK: - Access to the Model
@@ -97,4 +92,23 @@ class CalendarPage: ObservableObject {
     }
     
     // MARK: - Intent
+    func makeIndexOutFor(date: String) -> Int {
+        // Understand dateString
+        let dateComponents = date.components(separatedBy: " ")
+        let monthInt = monthsString.firstIndex(of: dateComponents[0])! + 1
+        let dayInt = Int(dateComponents[1]) ?? 0
+        
+        // loop over til the day of the string creating index
+        var index = 0
+        for month in 1...monthInt {
+            let monthDate = Date(year: Date().year, month: month, day: 1, hour: 0, minute: 0)
+            
+            if month == monthInt {
+                index += dayInt
+            } else {
+                index += monthDate.monthDays
+            }
+        }
+        return index - 1
+    }
 }
