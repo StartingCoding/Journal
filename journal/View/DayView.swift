@@ -46,13 +46,9 @@ struct DayView: View {
             },
             trailing: Button("👤") {  }
         )
-    }
-    
-    init(date: String, todayPage: CalendarPage) {
-        self.date = date
-        self.todayPage = todayPage
-        
-        todayPage.indexForTexts = 1000
+        .onAppear {
+            todayPage.indexForTexts = todayPage.makeIndexOutFor(date: date)
+        }
     }
 }
 

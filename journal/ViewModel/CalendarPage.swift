@@ -12,124 +12,95 @@ import SwiftDate
 
 class CalendarPage: ObservableObject {
     // MARK: - Model
-    @Published private var dayContent: [DayModel]
-    var calendarContent: [CalModel]
+    @Published private var days: [DayModel]
+    var calendarContent: [CalendarModel]
     
     let monthsString = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     
     init() {
-        var mArray = [CalModel]()
+        var months = [CalendarModel]()
         
-        // Making months
+        // Making months for years
         for month in 0...11 {
             // Making days based on months
-            let dateMonth = Date {
+            let actualYearLoopingMonths = Date {
                 $0.month = month + 1
             }
-            var dArray = [CalModel]()
-            for day in 1...dateMonth!.monthDays {
-                let calMod = CalModel(name: "\(day)")
-                dArray.append(calMod)
+            var days = [CalendarModel]()
+            for day in 1..<actualYearLoopingMonths!.monthDays {
+                let calendarModel = CalendarModel(name: "\(day)")
+                days.append(calendarModel)
             }
-            
-            let calMod = CalModel(name: monthsString[month], subCalModel: dArray)
-            mArray.append(calMod)
+            // Making months with days
+            let calendarModelForMonths = CalendarModel(name: monthsString[month], subCalendarModel: days)
+            months.append(calendarModelForMonths)
         }
         
+        var content = [String]()
         
-        var yArray = [CalModel]()
-        let actualYear = Date().year
-        
-        var content = [[String]]()
-        
-        // Making Years
-        for yearIterator in 0...4 {
+        // Making years for the calendarContent
+        for yearIndex in 0...4 {
             // Make content of a day based on years
-            content.append(["\(actualYear + yearIterator)", "Text \(Int.random(in: 10...20))"])
-            
-            let calMod = CalModel(name: "\(actualYear + yearIterator)", subCalModel: mArray)
-            yArray.append(calMod)
+            content.append("Text \(yearIndex)")
         }
         
-        calendarContent = yArray
+        calendarContent = months
         
-        
-        // Calculate how many days are in 5 years from the open of the journal
-        var daysInFiveYears = 0
-        for year in 0...4 {
-            let startDate = DateInRegion(year: Date().year + year, month: 1, day: 1)
-            
-            for month in 0...11 {
-                let monthDate = startDate + month.months
-                daysInFiveYears += monthDate.monthDays
-            }
+        // Calculate how many days are in a years from the open of the journal
+        var daysInOneYear = 0
+        for month in 0...11 {
+            let monthDate = DateInRegion(year: Date().year, month: 1, day: 1) + month.months
+            daysInOneYear += monthDate.monthDays
         }
         
-        // Making content for all of the days in the 5 years
-        let dMod = DayModel(content: content)
-        dayContent = Array(repeating: dMod, count: daysInFiveYears)
-        print(dayContent)
+        // Making day model for all of the days in the 12 months of a year
+        let dayModel = DayModel(content: content)
+        days = Array(repeating: dayModel, count: daysInOneYear)
     }
     
     // MARK: - Access to the Model
     var years: [String] {
         var allYears = [String]()
-        for year in calendarContent {
-            allYears.append(year.name)
+        for yearIterator in 0..<days[0].content.count {
+            allYears.append(String(Date().year + yearIterator))
         }
         return allYears
     }
     
     var texts: [String] {
         get {
-            let dayArray = dayContent[indexForTexts].content
-            
-            var result = [String]()
-            
-            dayArray.forEach({ content in
-                result.append(content[1])
-            })
-            print(indexForTexts)
-            return result
+            days[indexForTexts].content
         }
         set {
-            let dayArray = dayContent[indexForTexts].content
-            
-            var result = [String]()
-            
-            dayArray.forEach({ content in
-                result.append(content[1])
-            })
-            
-            result = newValue
+            days[indexForTexts].content = newValue
         }
     }
     
     var indexForTexts = 0
-    
-//    var months: [String] {
-//        let monhtsCount = dayContent.count
-//        var result = [String]()
-//
-//        for actualMonth in 0...monhtsCount {
-//            result.append(monthsString[actualMonth])
-//        }
-//
-//        return result
-//    }
     
     var month: String {
         let month = Date().month
         return monthsString[month]
     }
     
-//    var day: String {
-//        String(Date().day)
-//    }
-    
-//    var pageDate: String {
-//        month + " " + day
-//    }
-    
     // MARK: - Intent
+    func makeIndexOutFor(date: String) -> Int {
+        // Understand dateString
+        let dateComponents = date.components(separatedBy: " ")
+        let monthInt = monthsString.firstIndex(of: dateComponents[0])! + 1
+        let dayInt = Int(dateComponents[1]) ?? 0
+        
+        // loop over til the day of the string creating index
+        var index = 0
+        for month in 1...monthInt {
+            let monthDate = Date(year: Date().year, month: month, day: 1, hour: 0, minute: 0)
+            
+            if month == monthInt {
+                index += dayInt
+            } else {
+                index += monthDate.monthDays
+            }
+        }
+        return index - 1
+    }
 }

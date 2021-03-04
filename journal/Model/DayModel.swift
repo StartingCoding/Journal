@@ -8,10 +8,10 @@
 import Foundation
 
 struct DayModel {
-    var content: [[String]]
+    var content: [String]
 }
 
-struct CalModel {
+struct CalendarModel {
     var name: String
-    var subCalModel: [CalModel]?
+    var subCalendarModel: [CalendarModel]?
 }
