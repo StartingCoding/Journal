@@ -26,11 +26,19 @@ class CalendarPage: ObservableObject {
             let actualYearLoopingMonths = Date {
                 $0.month = month + 1
             }
+            
             var days = [CalendarModel]()
-            for day in 1..<actualYearLoopingMonths!.monthDays {
+            for day in 1...actualYearLoopingMonths!.monthDays {
                 let calendarModel = CalendarModel(name: "\(day)")
                 days.append(calendarModel)
+                
+                // Add day for leap year
+                if month == 1 && day == actualYearLoopingMonths!.monthDays {
+                    let calendarModel = CalendarModel(name: String(day + 1))
+                    days.append(calendarModel)
+                }
             }
+            
             // Making months with days
             let calendarModelForMonths = CalendarModel(name: monthsString[month], subCalendarModel: days)
             months.append(calendarModelForMonths)
